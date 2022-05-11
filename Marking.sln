@@ -6,8 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Marking", "Marking\Marking.vcxproj", "{B4CE7A4F-3A08-47D5-BE66-9AD66FDD9751}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Marking-Test", "Marking-Test\Marking-Test.vcxproj", "{0C8309D1-86C3-4F1C-ACC8-4820A5A75E0B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B4CE7A4F-3A08-47D5-BE66-9AD66FDD9751} = {B4CE7A4F-3A08-47D5-BE66-9AD66FDD9751}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MarkingApplication", "MarkingApplication\MarkingApplication.vcxproj", "{6DC9D34C-AE57-4227-9013-DA07BD9E99AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B4CE7A4F-3A08-47D5-BE66-9AD66FDD9751} = {B4CE7A4F-3A08-47D5-BE66-9AD66FDD9751}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
