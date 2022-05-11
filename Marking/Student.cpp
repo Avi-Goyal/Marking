@@ -1,6 +1,5 @@
 #include "Student.h"
 
-
 Student::Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) :
     identifier(identifier), givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {};
 
@@ -9,13 +8,13 @@ Student::Student(const std::string& file_path_name)
 {
     using json = nlohmann::json;
 
-    // opening file using fstream
+    // Opening file using fstream.
     std::ifstream json_file(file_path_name);
 
-    // parse the json file into json object
+    // Parse the json file into json object.
     json json_object = json::parse(json_file);
 
-    // construct student object from json object key values
+    // Construct student object from json object key values.
     this->identifier = json_object.value("identifier", "what");
     this->givenName = json_object.value("givenName", "what");
     this->familyName = json_object.value("familyName", "what");
@@ -45,9 +44,10 @@ std::string Student::getEmail()
     return email;
 }
 
-std::map<std::string, std::vector<double>> Student::getGrades()
-{
-    return grades;
+bool Student::getGrades(std::string course_code, std::vector<double>* grades) {
+    *grades = courseHolder[course_code];
+
+    return true;
 }
 
 std::map<std::string, CourseResult> Student::getResults()
@@ -78,10 +78,7 @@ std::smatch Student::validateEmail(const std::string& email)
     {
         std::cout << "Valid email.";
         return match;
-    }
-    else
-    {
+    } else {
         std::cout << "Invalid email.";
     }
-
 }
