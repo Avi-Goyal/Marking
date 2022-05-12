@@ -15,10 +15,10 @@
     "identifier": "NLA123",
     "name": "Numerical Linear Algebra",
     "weights": [
-      20,
-      20,
-      10,
-      50
+      1,
+      2,
+      3,
+      94
     ]
   },
   {
@@ -26,10 +26,10 @@
     "identifier": "PDE123",
     "name": "Partial Differential Equations",
     "weights": [
-      20,
-      20,
+      1.0,
+      3.3,
       10,
-      50
+      85.7
     ]
   }
 ]

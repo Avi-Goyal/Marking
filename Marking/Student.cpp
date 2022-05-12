@@ -40,44 +40,39 @@ Student::Student(std::string tmp_identifier, std::string givenName, std::string 
 	if (validateIdentifier(tmp_identifier)) {
 		identifier = tmp_identifier;
 	} else {
-		throw std::runtime_error("Identifier " + tmp_identifier + " is invalid.");
+		throw std::runtime_error("Identifier " + tmp_identifier + " is invalid."); // Log error.
 	}
 
 	if (validateEmail(tmp_email)) {
-		identifier = tmp_email;
+		email = tmp_email;
 	} else {
-		throw std::runtime_error("Email " + tmp_email + " is invalid.");
+		throw std::runtime_error("Email " + tmp_email + " is invalid."); // Log error.
 	}
 
 };
 
-std::string Student::getIdentifier()
-{
+std::string Student::getIdentifier() {
 	return identifier;
 }
 
-std::string Student::getGivenName()
-{
+std::string Student::getGivenName() {
 	return givenName;
 }
 
-std::string Student::getFamilyName()
-{
+std::string Student::getFamilyName() {
 	return familyName;
 }
 
-std::string Student::getEmail()
-{
+std::string Student::getEmail() {
 	return email;
 }
 
-std::map<std::string, std::vector<double>> Student::getGrades()
-{
+// This should take in a string and return the result, not the entire map. Ask James.
+std::map<std::string, std::vector<double>> Student::getGrades() {
 	return grades;
 }
 
-std::map<std::string, CourseResult> Student::getResults()
-{
+std::map<std::string, CourseResult> Student::getResults() {
 	return results = results;
 }
 
