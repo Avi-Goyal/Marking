@@ -34,7 +34,7 @@ int main() {
 	//CourseHolder test = CourseHolder("C:\\Users\\gmf174\\source\\repos\\Avi-Goyal\\Marking\\courses1.json");
 	StudentHolder test = StudentHolder("C:\\Users\\gmf174\\source\\repos\\Avi-Goyal\\Marking\\students.json");
 	
-    Student s1 =  test.getStudent("ZZA1234557");
+    Student s1 =  test.getStudent("ZDA1234557");
 	std::cout << s1.getFamilyName();
 
 	//std::cout << test.courses[0]->getGrade();
