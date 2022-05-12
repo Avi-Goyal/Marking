@@ -31,7 +31,7 @@ int main() {
     Student test_1("YY12345678", "Jack", "Smith", "Jack@gmail.com", grades, results);
     std::cout << test_1.getEmail() << std::endl;*/
 
-	CourseHolder test = CourseHolder("/Users/GoRi1/Desktop/course.json");
+	CourseHolder test = CourseHolder("C:\\Users\\gmf174\\source\\repos\\Avi-Goyal\\Marking\\courses1.json");
 	std::cout<<test.courses[0]->getGrade();
 
 	//system("pause>0");

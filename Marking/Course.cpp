@@ -52,23 +52,22 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 	std::vector<json> courses_json = json::parse(json_file);
 	std::vector<Course*> courses;
 	for (const auto& course : courses_json) {
+		
+		int course_type = course.at("courseType");
 
-		if (course.at("courseType") == 0) {
+		if (course_type == 0) {
 			Course* ptr = new ExamOnly();
-			courses.push_back((ExamOnly*)ptr);
-
+			courses.push_back(ptr);
 		}
-		else if (course.at("courseType") == 1) {
-			Course* ptr = new ExamOnly();
-			courses.push_back((CourseworkOnly*)ptr);
-
+		else if (course_type == 1) {
+			Course* ptr = new CourseworkOnly();
+			courses.push_back(ptr);
 		}
-		else if (course.at("courseType") == 2) {
-			Course* ptr = new ExamOnly();
-			courses.push_back((Hybrid*)ptr);
+		else if (course_type == 2) {
+			Course* ptr = new Hybrid();
+			courses.push_back(ptr);
 		}
-		else
-		{
+		else {
 			throw std::invalid_argument("Course type is invalid.");
 		}
 	}

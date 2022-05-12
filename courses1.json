@@ -3,18 +3,33 @@
     "courseType": 0,
     "identifier": "AMF123",
     "name": "Advance Math Finance",
-    "weights": [ 20, 20, 10, 50 ]
+    "weights": [
+      20,
+      20,
+      10,
+      50
+    ]
   },
   {
     "courseType": 1,
     "identifier": "NLA123",
     "name": "Numerical Linear Algebra",
-    "weights": [ 20, 20, 10, 50 ]
+    "weights": [
+      20,
+      20,
+      10,
+      50
+    ]
   },
   {
     "courseType": 2,
     "identifier": "PDE123",
     "name": "Partial Differential Equations",
-    "weights": [ 20, 20, 10, 50 ]
+    "weights": [
+      20,
+      20,
+      10,
+      50
+    ]
   }
 ]
