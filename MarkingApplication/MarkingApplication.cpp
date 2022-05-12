@@ -1,25 +1,6 @@
 #include "..\Marking\Course.h"
 #include "..\Marking\CourseResult.h"
 #include "..\Marking\Student.h"
-#include "..\Marking\Course.cpp"
-#include "..\Marking\CourseResult.cpp"
-#include "..\Marking\Student.cpp"
-#include <iostream>
-#include <cassert>
-#include <vector>
-#include <regex>
-#include<string>
-#include<map>
-#include <cmath>
-#include <sstream>
-#include <vector>
-#include <memory>
-#include <algorithm>
-#include <fstream>
-#include <iomanip>
-#include <cassert>
-#include <nlohmann/json.hpp>
-#include<cmath>
 
 using json = nlohmann::json;
 
@@ -53,31 +34,21 @@ int main() {
 
 
 	std::string amf = "AMF123", nla = "NLA123";
+
 	std::vector<double> grades_amf = { 50, 40, 70 };
 	std::vector<double> grades_nla = { 35, 80, 100 };
+
 	std::map<std::string, std::vector<double>> grades;
-	grades.insert({ amf, grades_amf }); grades.insert({ nla, grades_nla });
+
+	grades.insert({ amf, grades_amf }); 
+	grades.insert({ nla, grades_nla });
+
 	std::map<std::string, CourseResult> results{};
 
 	Student s("123", "John", "Smith", "js@gmail.com", grades, results);
 	json j1 = s;
 	std::cout << j1;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	system("pause>0");
 	return 0;
-
 }

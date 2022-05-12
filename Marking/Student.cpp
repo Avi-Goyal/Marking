@@ -1,19 +1,16 @@
-#include<string>
-#include<iostream>
-#include<fstream>
+#include <string>
+#include <iostream>
+#include <fstream>
 #include <algorithm>
-#include<map>
+#include <map>
 #include <nlohmann/json.hpp>
-#include"Student.h"
-#include"CourseResult.h"
+#include "Student.h"
 
 using json = nlohmann::json;
 
 // constructor
 Student::Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) :
 	identifier(identifier), givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {};
-
-
 
 std::string Student::getIdentifier()
 {

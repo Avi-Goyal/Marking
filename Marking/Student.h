@@ -1,15 +1,14 @@
-#include<string>
-#include<map>
-#include<string>
+#include <string>
+#include <map>
+#include <string>
 #include <nlohmann/json.hpp>
-#include<regex>
-#include<fstream>
-#include"CourseResult.h"
+#include <regex>
+#include <fstream>
+#include "CourseResult.h"
 
 using json = nlohmann::json;
 
-class Student
-{
+class Student {
 
 public:
 
@@ -24,7 +23,7 @@ public:
 	// constructor:
 	Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results);
 
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(student, identifier, givenName, familyName, email, grades);
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Student, identifier, givenName, familyName, email, grades);
 
 	// accessors
 	std::string getIdentifier();
@@ -40,18 +39,15 @@ public:
 
 };
 
-class StudentHolder
-{
-private:
-	std::vector<Student> students;
-public:
-	StudentHolder(std::vector<Student> students) : students(students) {};
-	StudentHolder() = default;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
-
-};
-
-static StudentHolder CreateStudentHolder(std::string file_path_name)
-{
-
-}
+//class StudentHolder {
+//private:
+//	std::vector<Student> students;
+//public:
+//	StudentHolder(std::vector<Student> students) : students(students) {};
+//	//StudentHolder() = default;
+//	//NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
+//};
+//
+//static StudentHolder CreateStudentHolder(std::string file_path_name) {
+//
+//}
