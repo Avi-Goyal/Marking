@@ -45,7 +45,7 @@ class StudentHolder
 private:
 	std::vector<Student> students;
 public:
-	StudentHolder(std::vector<Student> students) : students(students) {};
+	StudentHolder(std::vector<Student> students);
 	// constrcutor from json file
 	StudentHolder(std::string file_path_name);
 

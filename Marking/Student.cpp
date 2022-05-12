@@ -13,7 +13,7 @@ StudentHolder::StudentHolder(std::string file_path_name) {
 }
 
 Student StudentHolder::getStudent(std::string student_id) {
-	return map_id_to_student.at(student_id);
+	return map_id_to_student[student_id];
 }
 
 // Constructor
