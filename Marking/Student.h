@@ -33,11 +33,6 @@ public:
 	std::string getEmail();
 	std::map<std::string, std::vector<double>> getGrades();
     std::map<std::string, CourseResult> getResults();
-
-	// validation functions
-	std::smatch validateIdentifier();
-	std::smatch validateEmail();
-
 };
 
 class StudentHolder
@@ -45,9 +40,10 @@ class StudentHolder
 private:
 	std::vector<Student> students;
 public:
+	// Constructors.
 	StudentHolder(std::vector<Student> students);
-	// constrcutor from json file
 	StudentHolder(std::string file_path_name);
+
 
 	std::map < std::string, Student > map_id_to_student;
 	Student getStudent(std::string student_id);

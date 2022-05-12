@@ -17,8 +17,21 @@ Student StudentHolder::getStudent(std::string student_id) {
 }
 
 // Constructor
-Student::Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) :
-	identifier(identifier), givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {};
+Student::Student(std::string tmp_identifier, std::string givenName, std::string familyName, std::string tmp_email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) : givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {
+
+	if (validateIdentifier(tmp_identifier)) {
+		identifier = tmp_identifier;
+	} else {
+		throw std::runtime_error("Identifier " + tmp_identifier + " is invalid.");
+	}
+
+	if (validateEmail(tmp_email)) {
+		identifier = tmp_email;
+	} else {
+		throw std::runtime_error("Email " + tmp_email + " is invalid.");
+	}
+
+};
 
 std::string Student::getIdentifier()
 {
@@ -50,30 +63,18 @@ std::map<std::string, CourseResult> Student::getResults()
 	return results = results;
 }
 
-std::smatch Student::validateIdentifier()
-{
+// Ask James about std::smatch being returned.
+bool validateIdentifier(std::string identifier) {
 	std::regex regular_expression("^([A-Z]{2})([0-9]{8})$");
 	std::smatch match;
-	if (regex_search(identifier, match, regular_expression))
-	{
-		return match;
-	}
-	else
-	{
-		std::cout << "Invalid identifier.";
-	}
+	// TODO: Log info
+	return std::regex_search(identifier, match, regular_expression);
 }
 
-std::smatch Student::validateEmail() {
+bool validateEmail(std::string email) {
 	std::regex regular_expression("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
 	std::smatch match;
-	if (regex_search(email, match, regular_expression)) {
-		return match;
-	}
-	
-	std::cout << "Invalid email."; // Logger.
-	throw std::invalid_argument("Invalid email provided.");
-	// Ask James: Why not return bool instead? Invalid control path.
+	// TODO: Log info
+	return std::regex_search(email, match, regular_expression);
 }
-
 
