@@ -3,7 +3,12 @@
 using json = nlohmann::json;
 
 StudentHolder::StudentHolder(std::string file_path_name) {
-	CreateStudentHolder(file_path_name);
+	std::ifstream json_file(file_path_name);
+	std::vector<json> students_json = json::parse(json_file);
+	std::vector<Student> students;
+	for (const auto& student : students_json) {
+		students.push_back((Student)student);
+	}
 }
 
 // Constructor
@@ -66,15 +71,4 @@ std::smatch Student::validateEmail() {
 	// Ask James: Why not return bool instead? Invalid control path.
 }
 
-
-static StudentHolder CreateStudentHolder(std::string file_path_name)
-{
-	std::ifstream json_file(file_path_name);
-	std::vector<json> students_json = json::parse(json_file);
-	std::vector<Student> students;
-	for (const auto& student : students_json) {
-		students.push_back((Student)student);
-	}
-	return StudentHolder(students);
-}
 

@@ -48,34 +48,31 @@ double CourseworkOnly::getGrade() {
 }
 
 CourseHolder::CourseHolder(std::string file_path_name) {
-	CreateCourseHolder(file_path_name);
-}
-
-CourseHolder::CourseHolder(std::vector<Course*> courses) : courses(courses) { }
-
-// Static 
-CourseHolder CreateCourseHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
-	std::vector<json> courses_json;
-	courses_json = json::parse(json_file);
+	std::vector<json> courses_json = json::parse(json_file);
 	std::vector<Course*> courses;
 	for (const auto& course : courses_json) {
 
 		if (course.at("courseType") == 0) {
 			Course* ptr = new ExamOnly();
-			courses.push_back((ExamOnly*) ptr);
+			courses.push_back((ExamOnly*)ptr);
 
-		} else if (course.at("courseType") == 1) {
-			Course* ptr = new ExamOnly();
-			courses.push_back((CourseworkOnly*) ptr);
-
-		} else if (course.at("courseType") == 2) {
-			Course* ptr = new ExamOnly();
-			courses.push_back((Hybrid*) ptr);
 		}
+		else if (course.at("courseType") == 1) {
+			Course* ptr = new ExamOnly();
+			courses.push_back((CourseworkOnly*)ptr);
 
-		throw std::invalid_argument("Course type is invalid.");
+		}
+		else if (course.at("courseType") == 2) {
+			Course* ptr = new ExamOnly();
+			courses.push_back((Hybrid*)ptr);
+		}
+		else
+		{
+			throw std::invalid_argument("Course type is invalid.");
+		}
 	}
-
-	return CourseHolder(courses);
+	this->courses = courses;
 }
+
+CourseHolder::CourseHolder(std::vector<Course*> courses) : courses(courses) { }

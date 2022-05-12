@@ -53,4 +53,3 @@ public:
 
 };
 
-static StudentHolder CreateStudentHolder(std::string file_path_name);
