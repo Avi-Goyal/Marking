@@ -2,6 +2,24 @@
 
 using json = nlohmann::json;
 
+// Ask James about std::smatch being returned.
+bool validateIdentifier(std::string identifier) {
+	std::regex regular_expression("^([A-Z]{2})([0-9]{8})$");
+	std::smatch match;
+	// TODO: Log info
+	return std::regex_search(identifier, match, regular_expression);
+}
+
+bool validateEmail(std::string email) {
+	std::regex regular_expression("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+	std::smatch match;
+	// TODO: Log info
+	return std::regex_search(email, match, regular_expression);
+}
+
+
+
+
 StudentHolder::StudentHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
 	std::vector<json> students_json = json::parse(json_file);
@@ -61,20 +79,5 @@ std::map<std::string, std::vector<double>> Student::getGrades()
 std::map<std::string, CourseResult> Student::getResults()
 {
 	return results = results;
-}
-
-// Ask James about std::smatch being returned.
-bool validateIdentifier(std::string identifier) {
-	std::regex regular_expression("^([A-Z]{2})([0-9]{8})$");
-	std::smatch match;
-	// TODO: Log info
-	return std::regex_search(identifier, match, regular_expression);
-}
-
-bool validateEmail(std::string email) {
-	std::regex regular_expression("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-	std::smatch match;
-	// TODO: Log info
-	return std::regex_search(email, match, regular_expression);
 }
 

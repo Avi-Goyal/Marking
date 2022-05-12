@@ -24,6 +24,7 @@ public:
 	// constructor:
 	Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results);
 
+	// Fix validation.
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Student, identifier, givenName, familyName, email, grades);
 
 	// accessors
