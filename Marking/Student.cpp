@@ -1,14 +1,12 @@
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-#include <map>
-#include <nlohmann/json.hpp>
 #include "Student.h"
 
 using json = nlohmann::json;
 
-// constructor
+StudentHolder::StudentHolder(std::string file_path_name) {
+	CreateStudentHolder(file_path_name);
+}
+
+// Constructor
 Student::Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) :
 	identifier(identifier), givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {};
 
@@ -68,4 +66,15 @@ std::smatch Student::validateEmail() {
 	// Ask James: Why not return bool instead? Invalid control path.
 }
 
+
+static StudentHolder CreateStudentHolder(std::string file_path_name)
+{
+	std::ifstream json_file(file_path_name);
+	std::vector<json> students_json = json::parse(json_file);
+	std::vector<Student> students;
+	for (const auto& student : students_json) {
+		students.push_back((Student)student);
+	}
+	return StudentHolder(students);
+}
 

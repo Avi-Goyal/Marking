@@ -1,27 +1,61 @@
-#pragma once
-#include <vector>
 #include <string>
 #include <iostream>
-#include <numeric>
+#include <map>
+#include <string>
+#include <nlohmann/json.hpp>
+#include <regex>
+#include <fstream>
+
+using json = nlohmann::json;
 
 // This is the abstract base class, therefore it has no constructor.
 class Course {
+public:
     std::string identifier;
     std::vector<double> weights;
 
-    virtual double getGrade();
+	virtual double getGrade() = 0;
+
+	Course() = default;
+	
+protected:
+	Course(std::string identifier, std::vector<double> weights);
 };
 
 // Callable classes.
-class ExamOnly : Course {
+class ExamOnly : public Course {
+public:
     ExamOnly(std::string identifier, std::vector<double> weights);
-    //double getGrade();
+	double getGrade();
+	ExamOnly() = default;
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ExamOnly, identifier, weights);
 };
 
-class CourseworkOnly : Course {
-    CourseworkOnly();
+class CourseworkOnly : public Course {
+public:
+    CourseworkOnly(std::string identifier, std::vector<double> weights);
+	double getGrade();
+	CourseworkOnly() = default;
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(CourseworkOnly, identifier, weights);
 };
 
-class Hybrid : Course {
-    Hybrid();
+class Hybrid : public Course {
+public:
+	Hybrid(std::string identifier, std::vector<double> weights);
+	double getGrade();
+	Hybrid() = default;
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Hybrid, identifier, weights);
+}; 
+
+class CourseHolder {
+private:
+	std::vector<Course*> courses;
+public:
+	CourseHolder(std::vector<Course*> courses);
+	// constrcutor from json file
+	CourseHolder(std::string file_path_name);
+	CourseHolder() = default;
+	//NLOHMANN_DEFINE_TYPE_INTRUSIVE(CourseHolder, courses);
 };
+
+CourseHolder CreateCourseHolder(std::string file_path_name);

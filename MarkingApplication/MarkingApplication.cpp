@@ -31,24 +31,9 @@ int main() {
     Student test_1("YY12345678", "Jack", "Smith", "Jack@gmail.com", grades, results);
     std::cout << test_1.getEmail() << std::endl;*/
 
+	CourseHolder test = CreateCourseHolder("/Users/gmf174/source/repos/Avi-Goyal/Marking/courses.json");
+	//std::vector<Course*> courses;
 
-
-	std::string amf = "AMF123", nla = "NLA123";
-
-	std::vector<double> grades_amf = { 50, 40, 70 };
-	std::vector<double> grades_nla = { 35, 80, 100 };
-
-	std::map<std::string, std::vector<double>> grades;
-
-	grades.insert({ amf, grades_amf }); 
-	grades.insert({ nla, grades_nla });
-
-	std::map<std::string, CourseResult> results{};
-
-	Student s("123", "John", "Smith", "js@gmail.com", grades, results);
-	json j1 = s;
-	std::cout << j1;
-
-	system("pause>0");
+	//system("pause>0");
 	return 0;
 }

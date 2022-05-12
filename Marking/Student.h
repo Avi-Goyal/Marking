@@ -3,6 +3,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include <regex>
+#include <iostream>
 #include <fstream>
 #include "CourseResult.h"
 
@@ -45,19 +46,11 @@ private:
 	std::vector<Student> students;
 public:
 	StudentHolder(std::vector<Student> students) : students(students) {};
+	// constrcutor from json file
+	StudentHolder(std::string file_path_name);
 	StudentHolder() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
 
 };
 
-static StudentHolder CreateStudentHolder(std::string file_path_name)
-{
-	std::ifstream json_file(file_path_name);
-	std::vector<json> students_json = json::parse(json_file);
-	std::vector<Student> students;
-	for (const auto& student : students_json) {
-		students.push_back((Student)student);
-	}
-	return StudentHolder(students);
-}
-
+static StudentHolder CreateStudentHolder(std::string file_path_name);

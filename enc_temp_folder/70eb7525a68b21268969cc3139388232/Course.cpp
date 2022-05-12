@@ -56,8 +56,7 @@ CourseHolder::CourseHolder(std::vector<Course*> courses) : courses(courses) { }
 // Static 
 CourseHolder CreateCourseHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
-	std::vector<json> courses_json;
-	courses_json = json::parse(json_file);
+	std::vector<json> courses_json = json::parse(json_file);
 	std::vector<Course*> courses;
 	for (const auto& course : courses_json) {
 
