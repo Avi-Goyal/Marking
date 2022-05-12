@@ -5,10 +5,15 @@ using json = nlohmann::json;
 StudentHolder::StudentHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
 	std::vector<json> students_json = json::parse(json_file);
-	std::vector<Student> students;
 	for (const auto& student : students_json) {
-		students.push_back((Student)student);
+		Student tmp_student = (Student)student;
+		students.push_back(tmp_student);
+		map_id_to_student[student.at("identifier")] = tmp_student;
 	}
+}
+
+Student StudentHolder::getStudent(std::string student_id) {
+	return map_id_to_student.at(student_id);
 }
 
 // Constructor

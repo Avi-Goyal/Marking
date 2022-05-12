@@ -18,7 +18,7 @@ ExamOnly::ExamOnly(std::string identifier_t, std::vector<double> weights_t) {
 }
 
 double ExamOnly::getGrade() {
-	return 0.0;
+	return 2.0;
 }
 
 Hybrid::Hybrid(std::string identifier_t, std::vector<double> weights_t) {
@@ -31,7 +31,7 @@ Hybrid::Hybrid(std::string identifier_t, std::vector<double> weights_t) {
 }
 
 double Hybrid::getGrade() {
-	return 0.0;
+	return 1.0;
 }
 
 CourseworkOnly::CourseworkOnly(std::string identifier_t, std::vector<double> weights_t) {
@@ -50,7 +50,7 @@ double CourseworkOnly::getGrade() {
 CourseHolder::CourseHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
 	std::vector<json> courses_json = json::parse(json_file);
-	std::vector<Course*> courses;
+	// std::vector<Course*> courses;
 	for (const auto& course : courses_json) {
 		
 		int course_type = course.at("courseType");
@@ -58,20 +58,16 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 		if (course_type == 0) {
 			Course* ptr = new ExamOnly();
 			courses.push_back(ptr);
-		}
-		else if (course_type == 1) {
+		} else if (course_type == 1) {
 			Course* ptr = new CourseworkOnly();
 			courses.push_back(ptr);
-		}
-		else if (course_type == 2) {
+		} else if (course_type == 2) {
 			Course* ptr = new Hybrid();
 			courses.push_back(ptr);
-		}
-		else {
+		} else {
 			throw std::invalid_argument("Course type is invalid.");
 		}
 	}
-	this->courses = courses;
 }
 
 CourseHolder::CourseHolder(std::vector<Course*> courses) : courses(courses) { }

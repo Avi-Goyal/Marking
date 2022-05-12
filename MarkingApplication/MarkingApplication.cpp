@@ -31,8 +31,15 @@ int main() {
     Student test_1("YY12345678", "Jack", "Smith", "Jack@gmail.com", grades, results);
     std::cout << test_1.getEmail() << std::endl;*/
 
-	CourseHolder test = CourseHolder("C:\\Users\\gmf174\\source\\repos\\Avi-Goyal\\Marking\\courses1.json");
-	std::cout<<test.courses[0]->getGrade();
+	//CourseHolder test = CourseHolder("C:\\Users\\gmf174\\source\\repos\\Avi-Goyal\\Marking\\courses1.json");
+	StudentHolder test = StudentHolder("C:\\Users\\gmf174\\source\\repos\\Avi-Goyal\\Marking\\students.json");
+	
+ //   Student s1 =  test.getStudent("JS12345678");
+	//std::cout << s1.getGivenName();
+
+	//std::cout << test.courses[0]->getGrade();
+	//std::cout << test.courses[1]->getGrade();
+	//std::cout << test.courses[2]->getGrade();
 
 	//system("pause>0");
 	return 0;

@@ -48,6 +48,10 @@ public:
 	StudentHolder(std::vector<Student> students) : students(students) {};
 	// constrcutor from json file
 	StudentHolder(std::string file_path_name);
+
+	std::map < std::string, Student > map_id_to_student;
+	Student getStudent(std::string student_id);
+
 	StudentHolder() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
 

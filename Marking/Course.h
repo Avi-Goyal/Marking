@@ -49,14 +49,10 @@ public:
 }; 
 
 class CourseHolder {
-//private:
-	
-public:
+private:
 	std::vector<Course*> courses;
+public:
 	CourseHolder(std::vector<Course*> courses);
-	// constrcutor from json file
 	CourseHolder(std::string file_path_name);
-	CourseHolder() = default;
-	//NLOHMANN_DEFINE_TYPE_INTRUSIVE(CourseHolder, courses);
 };
 
