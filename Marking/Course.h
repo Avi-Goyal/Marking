@@ -12,9 +12,10 @@ class Course {
     virtual double getGrade();
 };
 
+// Callable classes.
 class ExamOnly : Course {
     ExamOnly(std::string identifier, std::vector<double> weights);
-    double getGrade();
+    //double getGrade();
 };
 
 class CourseworkOnly : Course {
