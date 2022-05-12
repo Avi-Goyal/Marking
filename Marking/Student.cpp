@@ -56,19 +56,16 @@ std::smatch Student::validateIdentifier()
 	}
 }
 
-std::smatch Student::validateEmail() 
-{
+std::smatch Student::validateEmail() {
 	std::regex regular_expression("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
 	std::smatch match;
-	if (regex_search(email, match, regular_expression))
-	{
+	if (regex_search(email, match, regular_expression)) {
 		return match;
 	}
-	else
-	{
-		std::cout << "Invalid email.";
-	}
-
+	
+	std::cout << "Invalid email."; // Logger.
+	throw std::invalid_argument("Invalid email provided.");
+	// Ask James: Why not return bool instead? Invalid control path.
 }
 
 
