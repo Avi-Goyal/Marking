@@ -39,15 +39,25 @@ public:
 
 };
 
-//class StudentHolder {
-//private:
-//	std::vector<Student> students;
-//public:
-//	StudentHolder(std::vector<Student> students) : students(students) {};
-//	//StudentHolder() = default;
-//	//NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
-//};
-//
-//static StudentHolder CreateStudentHolder(std::string file_path_name) {
-//
-//}
+class StudentHolder
+{
+private:
+	std::vector<Student> students;
+public:
+	StudentHolder(std::vector<Student> students) : students(students) {};
+	StudentHolder() = default;
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
+
+};
+
+static StudentHolder CreateStudentHolder(std::string file_path_name)
+{
+	std::ifstream json_file(file_path_name);
+	std::vector<json> students_json = json::parse(json_file);
+	std::vector<Student> students;
+	for (const auto& student : students_json) {
+		students.push_back((Student)student);
+	}
+	return StudentHolder(students);
+}
+
