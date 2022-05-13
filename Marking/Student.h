@@ -38,4 +38,6 @@ public:
 
 	//std::smatch validateIdentifier();
 	//std::smatch validateEmail();
+
+	bool getCourseGrades(std::string courseCode, std::vector<double>* course_grades);
 };
