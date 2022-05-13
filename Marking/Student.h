@@ -36,6 +36,11 @@ public:
 	std::map<std::string, std::vector<double>> getGrades();
     std::map<std::string, CourseResult> getResults();
 
+
+	// ask James if we can leave these out of the class
 	//std::smatch validateIdentifier();
 	//std::smatch validateEmail();
+
+
+	bool getCourseGrades(std::string courseCode, std::vector<double>* course_grades);
 };

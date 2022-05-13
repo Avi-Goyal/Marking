@@ -23,15 +23,19 @@ int main() {
 
 #include<regex>
 
-	std::regex regular_expression_0("^([A-Z]{2})([0-9]{8})$");
-	std::smatch match_0;
-	std::string id = "AA12345678";
-	std::regex_search(id, match_0, regular_expression_0);
 
-	std::regex regular_expression_1("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-	std::smatch match_1;
-	std::string email = "user@gmail.com";
-	std::regex_search(email, match_1, regular_expression_1);
+	StudentHolder s("/Users/GoRi1/Desktop/nest.json");
+	Student st = s.getStudent("JS12345678");
+
+	std::vector<double> course_grades{};
+	st.getCourseGrades("AMF126", &course_grades);
+
+	print_vector(course_grades);
+
+
+
+
+
 
 	return 0;
 }

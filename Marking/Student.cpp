@@ -56,3 +56,17 @@ std::map<std::string, std::vector<double>> Student::getGrades() {
 std::map<std::string, CourseResult> Student::getResults() {
 	return results = results;
 }
+
+bool Student::getCourseGrades(std::string courseCode, std::vector<double>* course_grades)
+{
+	if (getGrades().count(courseCode))
+	{
+		*course_grades = getGrades().at(courseCode);
+		return true;
+	}
+	else
+	{
+		std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n'; // logg
+		return false;
+	}
+}
