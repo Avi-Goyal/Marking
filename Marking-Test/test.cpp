@@ -2,7 +2,8 @@
 #include "..\Marking\Course.h"
 #include "..\Marking\CourseResult.h"
 #include "..\Marking\Student.h"
-#include "..\Marking\Holder.h"
+#include "..\Marking\CourseHolder.h"
+#include "..\Marking\StudentHolder.h"
 #include <vector>
 
 TEST(Student, StudentConstructor) {

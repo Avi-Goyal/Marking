@@ -30,6 +30,7 @@ Student::Student(std::string tmp_identifier, std::string givenName, std::string 
 	} else {
 		throw std::runtime_error("Email " + tmp_email + " is invalid."); // Log error.
 	}
+
 };
 
 std::string Student::getIdentifier() {
@@ -53,8 +54,19 @@ std::map<std::string, std::vector<double>> Student::getGrades() {
 	return grades;
 }
 
+void Student::populateResults(CourseHolder courses) {
+
+	std::vector<double> these_grades;
+
+	for (auto const& map : courses.getCourseMap()) {
+
+		getCourseGrades(map.first, &these_grades);
+		results.insert({ map.first, (*map.second).getGrade(these_grades) });
+	}
+}
+
 std::map<std::string, CourseResult> Student::getResults() {
-	return results = results;
+	return results;
 }
 
 bool Student::getCourseGrades(std::string courseCode, std::vector<double>* course_grades) {

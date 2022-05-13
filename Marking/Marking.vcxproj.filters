@@ -24,7 +24,10 @@
     <ClInclude Include="Student.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Holder.h">
+    <ClInclude Include="CourseHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StudentHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +41,10 @@
     <ClCompile Include="Student.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Holder.cpp">
+    <ClCompile Include="CourseHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StudentHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

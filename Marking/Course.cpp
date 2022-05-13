@@ -1,23 +1,38 @@
 #include "Course.h"
 
-double ExamOnly::getGrade(std::vector<double> grades) {
-	return std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
+CourseResult ExamOnly::getGrade(std::vector<double> grades) {
+	double score = std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
+	bool result = (score < 40 ? 0 : 1);
+
+	CourseResult grade(score, result);
+
+	return grade;
 }
 
 std::vector<double> ExamOnly::getWeights() {
 	return weights;
 }
 
-double CourseworkOnly::getGrade(std::vector<double> grades) {
-	return std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
+CourseResult CourseworkOnly::getGrade(std::vector<double> grades) {
+	double score = std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
+	bool result = (score < 40 ? 0 : 1);
+
+	CourseResult grade(score, result);
+
+	return grade;
 }
 
 std::vector<double> CourseworkOnly::getWeights() {
 	return weights;
 }
 
-double Hybrid::getGrade(std::vector<double> grades) {
-	return std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
+CourseResult Hybrid::getGrade(std::vector<double> grades) {
+	double score = std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
+	bool result = (score < 40 ? 0 : 1);
+
+	CourseResult grade(score, result);
+
+	return grade;
 }
 std::vector<double> Hybrid::getWeights() {
 	return weights;

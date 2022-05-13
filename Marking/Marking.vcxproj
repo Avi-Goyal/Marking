@@ -151,15 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CourseHolder.h" />
     <ClInclude Include="Course.h" />
     <ClInclude Include="CourseResult.h" />
-    <ClInclude Include="Holder.h" />
+    <ClInclude Include="StudentHolder.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CourseHolder.cpp" />
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="CourseResult.cpp" />
-    <ClCompile Include="Holder.cpp" />
+    <ClCompile Include="StudentHolder.cpp" />
     <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <ItemGroup>

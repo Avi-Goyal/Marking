@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include "CourseResult.h"
+#include "CourseHolder.h"
+
 
 using json = nlohmann::json;
 
@@ -23,7 +25,7 @@ public:
 	Student() = default;
 
 	// constructor:
-	Student(std::string identifier, std::string givenName, std::string familyName, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results);
+	Student(std::string identifier, std::string given_name, std::string family_name, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results);
 
 	// Fix validation.
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Student, identifier, givenName, familyName, email, grades);
@@ -34,10 +36,13 @@ public:
 	std::string getFamilyName();
 	std::string getEmail();
 	std::map<std::string, std::vector<double>> getGrades();
+	void populateResults(CourseHolder courses);
     std::map<std::string, CourseResult> getResults();
-
+	
 	//std::smatch validateIdentifier();
 	//std::smatch validateEmail();
 
 	bool getCourseGrades(std::string courseCode, std::vector<double>* course_grades);
+
+	
 };
