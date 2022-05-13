@@ -67,29 +67,32 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
 	std::vector<json> courses_json = json::parse(json_file);
 
+	// Smart pointers should be used - James.
 	for (const auto& course : courses_json) {
 		
 		int course_type = course.at("courseType");
 		std::string course_id = course.at("identifier");
 
+		// Switch to switch/case and put map outside.
 		if (course_type == 0) {
 			Course* ptr = new ExamOnly(course);
 			map_id_to_student[course_id] = ptr;
-		}
-		else if (course_type == 1) {
+		} else if (course_type == 1) {
 			Course* ptr = new CourseworkOnly(course);
 			map_id_to_student[course_id] = ptr;
-		}
-		else if (course_type == 2) {
+		} else if (course_type == 2) {
 			Course* ptr = new Hybrid(course);
 			map_id_to_student[course_id] = ptr;
-		}
-		else {
+		} else {
+			// Log.
 			throw std::invalid_argument("Course type is invalid.");
 		}
 
 	}
 }
+
+// Read # of students/courses should be logged.
+// 
 
 Course* CourseHolder::getCourse(std::string course_code) {
 	return map_id_to_student[course_code];

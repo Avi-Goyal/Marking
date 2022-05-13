@@ -2,7 +2,8 @@
 
 using json = nlohmann::json;
 
-// Ask James about std::smatch being returned.
+// Ask James about std::smatch being returned and for automated testing.
+// Do use smatch because regex_search always returns true if that works. Same as the passing by pointer functions. - James
 bool validateIdentifier(std::string identifier) {
 	std::regex regular_expression("^([A-Z]{2})([0-9]{8})$");
 	std::smatch match;
@@ -16,9 +17,6 @@ bool validateEmail(std::string email) {
 	// TODO: Log info
 	return std::regex_search(email, match, regular_expression);
 }
-
-
-
 
 StudentHolder::StudentHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
@@ -75,4 +73,3 @@ std::map<std::string, std::vector<double>> Student::getGrades() {
 std::map<std::string, CourseResult> Student::getResults() {
 	return results = results;
 }
-

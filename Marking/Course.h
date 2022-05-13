@@ -5,7 +5,6 @@
 #include <nlohmann/json.hpp>
 #include <regex>
 #include <fstream>
-#include <memory>
 
 // Abstract base class.
 class Course {
