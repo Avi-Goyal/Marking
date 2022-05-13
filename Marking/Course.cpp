@@ -26,15 +26,15 @@ double Course::getGrade() { return 1.0; }
 //}
 
 double ExamOnly::getGrade() {
-	return 0.0;
+	return CourseType::ExamOnlyCourse;
 }
 
 double CourseworkOnly::getGrade() {
-	return 1.0;
+	return CourseType::CourseworkOnlyCourse;
 }
 
 double Hybrid::getGrade() {
-	return 2.0;
+	return CourseType::HybridCourse;
 }
 
 std::vector<double> ExamOnly::getWeights() {
@@ -69,27 +69,31 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 
 	// Smart pointers should be used - James.
 	for (const auto& course : courses_json) {
-		
-		int course_type = course.at("courseType");
-		std::string course_id = course.at("identifier");
 
-		// Switch to switch/case and put map outside.
-		if (course_type == 0) {
-			Course* ptr = new ExamOnly(course);
-			map_id_to_student[course_id] = ptr;
-		} else if (course_type == 1) {
-			Course* ptr = new CourseworkOnly(course);
-			map_id_to_student[course_id] = ptr;
-		} else if (course_type == 2) {
-			Course* ptr = new Hybrid(course);
-			map_id_to_student[course_id] = ptr;
-		} else {
+		Course* ptr;
+		
+		switch ((int)course.at("courseType"))
+		{
+		case CourseType::ExamOnlyCourse:
+			ptr = new ExamOnly(course);
+			break;
+		case CourseType::CourseworkOnlyCourse:
+			ptr = new CourseworkOnly(course);
+			break;
+		case CourseType::HybridCourse:
+			ptr = new CourseworkOnly(course);
+			break;
+		default:
 			// Log.
 			throw std::invalid_argument("Course type is invalid.");
 		}
 
+		std::string course_id = course.at("identifier");
+		map_id_to_student[course_id] = ptr;
+
+		}
 	}
-}
+
 
 // Read # of students/courses should be logged.
 // 

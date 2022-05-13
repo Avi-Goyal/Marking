@@ -57,3 +57,8 @@ public:
 	Course* getCourse(std::string course_code);
 };
 
+enum CourseType {
+	ExamOnlyCourse = 0,
+	CourseworkOnlyCourse = 1,
+	HybridCourse = 2
+};
