@@ -2,37 +2,50 @@
 
 using json = nlohmann::json;
 
-// Ask James about std::smatch being returned and for automated testing.
-// Do use smatch because regex_search always returns true if that works. Same as the passing by pointer functions. - James
-bool validateIdentifier(std::string identifier) {
+std::smatch Student::validateIdentifier()
+{
 	std::regex regular_expression("^([A-Z]{2})([0-9]{8})$");
 	std::smatch match;
-	// TODO: Log info
-	return std::regex_search(identifier, match, regular_expression);
+	if (std::regex_search(identifier, match, regular_expression) == true) {
+
+		return match;
+	}
+	else
+	{
+		std::cout << "invalid identifier.";
+		return match;
+	}
 }
 
-bool validateEmail(std::string email) {
+std::smatch Student::validateEmail()
+{
 	std::regex regular_expression("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
 	std::smatch match;
-	// TODO: Log info
-	return std::regex_search(email, match, regular_expression);
+	if (std::regex_search(email, match, regular_expression) == true) {
+
+		return match;
+	}
+	else
+	{
+		std::cout << "invalid identifier.";
+		return match;
+	}
 }
 
 // Constructor
 Student::Student(std::string tmp_identifier, std::string givenName, std::string familyName, std::string tmp_email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) : givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {
 
-	if (validateIdentifier(tmp_identifier)) {
+	if (validateIdentifier().size() == 0) {
 		identifier = tmp_identifier;
 	} else {
 		throw std::runtime_error("Identifier " + tmp_identifier + " is invalid."); // Log error.
 	}
 
-	if (validateEmail(tmp_email)) {
+	if (validateEmail().size() == 0) {
 		email = tmp_email;
 	} else {
 		throw std::runtime_error("Email " + tmp_email + " is invalid."); // Log error.
 	}
-
 };
 
 std::string Student::getIdentifier() {
