@@ -67,7 +67,7 @@ TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {
 	CourseHolder s(R"(../small_courses.json)");
 	
 	std::vector<double> AMF_weights = { 0.2, 0.2, 0.1, 0.5 };
-	//EXPECT_EQ((*s.getCourse("AMF123")).getWeights(), AMF_weights);
+	EXPECT_EQ((*s.getCourse("AMF123")).getWeights(), AMF_weights);
 
 	std::vector<double> NLA_weights = { 0.02, 0.02, 0.03, 0.94 };
 	//EXPECT_EQ((*s.getCourse("NLA123")).getWeights(), NLA_weights);
