@@ -5,14 +5,14 @@ using json = nlohmann::json;
 std::smatch validateIdentifier(std::string identifier) {
 	std::regex regular_expression("^([A-Z]{2})([0-9]{8})$");
 	std::smatch match;
-	if (!std::regex_search(identifier, match, regular_expression)) {} //log
+	std::regex_search(identifier, match, regular_expression);
 	return match;
 }
 
 std::smatch validateEmail(std::string email) {
 	std::regex regular_expression("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
 	std::smatch match;
-	if (!std::regex_search(email, match, regular_expression)) {} //log
+	std::regex_search(email, match, regular_expression);
 	return match;
 }
 

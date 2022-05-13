@@ -28,7 +28,6 @@ private:
 	std::vector<Student> students;
 public:
 	// Constructors.
-	StudentHolder(std::vector<Student> students);
 	StudentHolder(std::string file_path_name);
 
 	std::map < std::string, Student > map_id_to_student;

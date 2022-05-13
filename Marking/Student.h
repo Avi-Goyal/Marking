@@ -36,6 +36,6 @@ public:
 	std::map<std::string, std::vector<double>> getGrades();
     std::map<std::string, CourseResult> getResults();
 
-	std::smatch validateIdentifier();
-	std::smatch validateEmail();
+	//std::smatch validateIdentifier();
+	//std::smatch validateEmail();
 };
