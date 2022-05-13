@@ -4,10 +4,10 @@
     "identifier": "AMF123",
     "name": "Advance Math Finance",
     "weights": [
-      20,
-      20,
-      10,
-      50
+      0.2,
+      0.2,
+      0.1,
+      0.5
     ]
   },
   {
@@ -15,10 +15,11 @@
     "identifier": "NLA123",
     "name": "Numerical Linear Algebra",
     "weights": [
-      1,
-      2,
-      3,
-      94
+      0.02,
+      0.02,
+      0.03,
+
+      0.94
     ]
   },
   {
@@ -26,10 +27,10 @@
     "identifier": "PDE123",
     "name": "Partial Differential Equations",
     "weights": [
-      1.0,
-      3.3,
-      10,
-      85.7
+      0.05,
+      0.05,
+      0.05,
+      0.85
     ]
   }
 ]

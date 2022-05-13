@@ -18,20 +18,6 @@ bool validateEmail(std::string email) {
 	return std::regex_search(email, match, regular_expression);
 }
 
-StudentHolder::StudentHolder(std::string file_path_name) {
-	std::ifstream json_file(file_path_name);
-	std::vector<json> students_json = json::parse(json_file);
-	for (const auto& student : students_json) {
-		Student tmp_student = (Student)student;
-		students.push_back(tmp_student);
-		map_id_to_student[student.at("identifier")] = tmp_student;
-	}
-}
-
-Student StudentHolder::getStudent(std::string student_id) {
-	return map_id_to_student[student_id];
-}
-
 // Constructor
 Student::Student(std::string tmp_identifier, std::string givenName, std::string familyName, std::string tmp_email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) : givenName(givenName), familyName(familyName), email(email), grades(grades), results(results) {
 

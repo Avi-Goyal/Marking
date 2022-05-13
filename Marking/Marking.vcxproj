@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClInclude Include="Course.h" />
     <ClInclude Include="CourseResult.h" />
+    <ClInclude Include="Holder.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="CourseResult.cpp" />
+    <ClCompile Include="Holder.cpp" />
     <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <ItemGroup>
