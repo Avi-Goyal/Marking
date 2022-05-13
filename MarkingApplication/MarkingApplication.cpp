@@ -21,20 +21,17 @@ void print_map(std::map<std::string, std::vector<double>> const& m)
 
 int main() {
 
-	//StudentHolder s(R"(../small_students.json)");
-	//CourseHolder g(R"(../small_courses.json)");
-	//Course* sth = g.getCourse("AMF123");
-	//std::cout<< sth->getGrade(s.getGrades("JS12345678", "AMF123"));
+#include<regex>
 
-	/*CourseHolder s(R"(../small_courses.json)");
+	std::regex regular_expression_0("^([A-Z]{2})([0-9]{8})$");
+	std::smatch match_0;
+	std::string id = "AA12345678";
+	std::regex_search(id, match_0, regular_expression_0);
 
-	std::vector<double> AMF_weights = { 0.2, 0.2, 0.1, 0.5 };
-	ExamOnly* course_0 = s.getCourse("AMF123");
-
-	ExamOnly exam_course = course_0;
-
-
-	*/
+	std::regex regular_expression_1("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+	std::smatch match_1;
+	std::string email = "user@gmail.com";
+	std::regex_search(email, match_1, regular_expression_1);
 
 	return 0;
 }

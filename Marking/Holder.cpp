@@ -12,7 +12,7 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 	// Smart pointers should be used - James.
 	for (const auto& course : courses_json) {
 
-		std::shared_ptr<Course*> ptr;
+		std::shared_ptr<Course> ptr;
 		//Course* ptr;
 
 		switch ((int)course.at("courseType"))
@@ -37,7 +37,7 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 }
 
 // Read # of students/courses should be logged.
-std::shared_ptr<Course*> CourseHolder::getCourse(std::string course_code) {
+std::shared_ptr<Course> CourseHolder::getCourse(std::string course_code) {
 	return map_id_to_student[course_code];
 }
 
