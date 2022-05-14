@@ -4,7 +4,6 @@
 #include "..\Marking\Student.h"
 #include "..\Marking\CourseHolder.h"
 #include "..\Marking\StudentHolder.h"
-#include <vector>
 
 TEST(Student, StudentConstructor) {
 
@@ -34,15 +33,15 @@ TEST(Student, StudentConstructor) {
 }
 
 TEST(StudentHolder, Constructor_Invalid_Filepath) {
-	EXPECT_ANY_THROW(StudentHolder s(R"(../does_not_Exist.json)"););
+	EXPECT_ANY_THROW(StudentHolder s(R"(../Test Data - DO NOT EDIT/does_not_Exist.json)"););
 }
 
 TEST(CourseHolder, Constructor_Invalid_Filepath) {
-	EXPECT_ANY_THROW(CourseHolder s(R"(../does_not_Exist.json)"););
+	EXPECT_ANY_THROW(CourseHolder s(R"(../Test Data - DO NOT EDIT/does_not_Exist.json)"););
 }
 
 TEST(StudentHolder, Constructor_From_Filepath_Small_Students_JSON) {
-	StudentHolder s(R"(../small_students.json)");
+	StudentHolder s(R"(../Test Data - DO NOT EDIT/small_students.json)");
 
 	Student student_0 = s.getStudent("JS12345678");
 	Student student_1 = s.getStudent("GF12345678");
@@ -73,7 +72,7 @@ TEST(StudentHolder, Constructor_From_Filepath_Small_Students_JSON) {
 }
 
 TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {
-	CourseHolder s(R"(../small_courses.json)");
+	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 	
 	std::vector<double> AMF_weights = { 1 };
 	EXPECT_EQ((*s.getCourse("AMF123")).getWeights(), AMF_weights);
@@ -90,7 +89,7 @@ TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {
 
 TEST(ExamOnly, Get_Grades_And_Get_Result_EXAM_ONLY) {
 
-	CourseHolder s(R"(../small_courses.json)");
+	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
 	// Fail exam
 	std::vector<double> fake_AMF_grades_0 = { 30 };
@@ -111,7 +110,7 @@ TEST(ExamOnly, Get_Grades_And_Get_Result_EXAM_ONLY) {
 
 TEST(CourseworkOnly, Get_Grades_And_Get_Result_COURSEWORK_ONLY) {
 
-	CourseHolder s(R"(../small_courses.json)");
+	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
 	// Fail exam
 	std::vector<double> fake_NLA_grades_0 = { 0, 0, 0, 40 };
@@ -132,7 +131,7 @@ TEST(CourseworkOnly, Get_Grades_And_Get_Result_COURSEWORK_ONLY) {
 
 TEST(Hybrid, Get_Grades_And_Get_Result_HYBRID_ONLY) {
 
-	CourseHolder s(R"(../small_courses.json)");
+	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
 	// Fail exam and fail coursework.
 	std::vector<double> fake_PDE_grades_0 = { 10, 10, 10 };

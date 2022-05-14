@@ -9,11 +9,13 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 	std::ifstream json_file(file_path_name);
 	std::vector<json> courses_json = json::parse(json_file);
 
-	// Smart pointers should be used - James.
 	for (const auto& course : courses_json) {
 
+		/// We store shared smart pointers so that we can copy them from our map
+		/// without issue given that unique_ptr can only be moved, not copied. This also
+		/// means that we do not need to set up a destructor for CourseHolder as when
+		/// the map is destroyed the pointers destructor will be called automatically.
 		std::shared_ptr<Course> ptr;
-		//Course* ptr;
 
 		switch ((int)course.at("courseType"))
 		{
@@ -37,8 +39,9 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 	}
 }
 
-std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap()
-{
+/// This is rather dangerous because of shared_ptr, we should try get rid of this.
+/// Create a custom iterator on course so that we don't need to give this out.
+const std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap() {
 	return map_id_to_course;
 }
 
@@ -48,5 +51,5 @@ std::shared_ptr<Course> CourseHolder::getCourse(std::string course_code) {
 }
 
 std::string CourseHolder::getCourseName(const std::string& course_code) {
-	return map_id_to_name.at(course_code);
+	return map_id_to_name[course_code];
 }
