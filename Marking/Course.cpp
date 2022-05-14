@@ -22,6 +22,9 @@ CourseResult CourseworkOnly::getGrade(std::vector<double> grades) {
 	double score = std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
 	bool result = (score < 40 ? 0 : 1);
 
+	plog::init(plog::debug, "Hello.log");
+	LOG(plog::Severity::fatal) << "Hello log from Coursework!";
+
 	CourseResult grade(score, result);
 
 	return grade;
@@ -35,9 +38,11 @@ Credits CourseworkOnly::getNumberOfCredits() {
 	return numberOfCredits;
 }
 
-#include <numeric>
-#include <functional>
+
 CourseResult Hybrid::getGrade(std::vector<double> grades) {
+
+	plog::init(plog::debug, "Hello.log");
+	LOG(plog::Severity::fatal) << "Hello log from Hybrid!";
 
 	double score_exam = grades[0];
 	double score_exam_scaled = grades[0] * weights[0];

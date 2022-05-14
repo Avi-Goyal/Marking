@@ -6,7 +6,11 @@
 #include <nlohmann/json.hpp>
 #include <regex>
 #include <fstream>
+#include <numeric>
+#include <functional>
+#include <plog/Log.h>
 #include "CourseResult.h"
+
 
 enum Credits {
 	TenCredits = 10, TwentyCredits = 20
