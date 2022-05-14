@@ -33,6 +33,14 @@ TEST(Student, StudentConstructor) {
 	EXPECT_EQ(s.getFamilyName(), last_name);
 }
 
+TEST(StudentHolder, Constructor_Invalid_Filepath) {
+	EXPECT_ANY_THROW(StudentHolder s(R"(../does_not_Exist.json)"););
+}
+
+TEST(CourseHolder, Constructor_Invalid_Filepath) {
+	EXPECT_ANY_THROW(CourseHolder s(R"(../does_not_Exist.json)"););
+}
+
 TEST(StudentHolder, Constructor_From_Filepath_Small_Students_JSON) {
 	StudentHolder s(R"(../small_students.json)");
 
@@ -67,14 +75,94 @@ TEST(StudentHolder, Constructor_From_Filepath_Small_Students_JSON) {
 TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {
 	CourseHolder s(R"(../small_courses.json)");
 	
-	std::vector<double> AMF_weights = { 0.2, 0.2, 0.1, 0.5 };
+	std::vector<double> AMF_weights = { 1 };
 	EXPECT_EQ((*s.getCourse("AMF123")).getWeights(), AMF_weights);
+	EXPECT_EQ((*s.getCourse("AMF123")).getNumberOfCredits(), Credits::TwentyCredits);
 
 	std::vector<double> NLA_weights = { 0.02, 0.02, 0.03, 0.94 };
-	//EXPECT_EQ((*s.getCourse("NLA123")).getWeights(), NLA_weights);
-	//EXPECT_EQ(typeid((*s.getCourse("NLA123"))).name(), "CourseworkOnly");
+	EXPECT_EQ((*s.getCourse("NLA123")).getWeights(), NLA_weights);
+	EXPECT_EQ((*s.getCourse("NLA123")).getNumberOfCredits(), Credits::TwentyCredits);
 
-	std::vector<double> PDE_weights = { 0.05, 0.05, 0.05, 0.85 };
-	//EXPECT_EQ((*s.getCourse("PDE123")).getWeights(), PDE_weights);
-	//EXPECT_EQ(typeid((*s.getCourse("PDE123"))).name(), "Hybrid");
+	std::vector<double> PDE_weights = { 0.05, 0.05, 0.90 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getWeights(), PDE_weights);
+	EXPECT_EQ((*s.getCourse("PDE123")).getNumberOfCredits(), Credits::TenCredits);
+}
+
+TEST(ExamOnly, Get_Grades_And_Get_Result_EXAM_ONLY) {
+
+	CourseHolder s(R"(../small_courses.json)");
+
+	// Fail exam
+	std::vector<double> fake_AMF_grades_0 = { 30 };
+	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_0).getResult(), false);
+	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_0).getScore(), 30);
+
+	// Barely pass AMF exam.
+	std::vector<double> fake_AMF_grades_1 = { 40 };
+	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_1).getResult(), true);
+	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_1).getScore(), 40);
+
+	// Pass AMF exam.
+	std::vector<double> fake_AMF_grades_2 = { 70 };
+	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_2).getResult(), true);
+	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_2).getScore(), 70);
+
+}
+
+TEST(CourseworkOnly, Get_Grades_And_Get_Result_COURSEWORK_ONLY) {
+
+	CourseHolder s(R"(../small_courses.json)");
+
+	// Fail exam
+	std::vector<double> fake_NLA_grades_0 = { 0, 0, 0, 40 };
+	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_0).getResult(), false);
+	EXPECT_NEAR((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_0).getScore(), 37.6, 1e-4);
+
+	// Barely pass NLA exam.
+	std::vector<double> fake_NLA_grades_1 = { 100, 100, 100, 35.1064 };
+	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_1).getResult(), true);
+	EXPECT_NEAR((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_1).getScore(), 40, 1e-4);
+
+	// Pass NLA exam.
+	std::vector<double> fake_NLA_grades_2 = { 70, 60, 70, 90 };
+	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_2).getResult(), true);
+	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_2).getScore(), 89.3);
+
+}
+
+TEST(Hybrid, Get_Grades_And_Get_Result_HYBRID_ONLY) {
+
+	CourseHolder s(R"(../small_courses.json)");
+
+	// Fail exam and fail coursework.
+	std::vector<double> fake_PDE_grades_0 = { 10, 10, 10 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_0).getResult(), false);
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_0).getScore(), 10);
+
+	// Fail AMF exam but pass coursework.
+	std::vector<double> fake_PDE_grades_1 = { 10, 100, 100 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_1).getResult(), false);
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_1).getScore(), 95.5);
+
+	// Pass AMF exam but fail coursework.
+	std::vector<double> fake_PDE_grades_2 = { 100, 0, 0 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_2).getResult(), false);
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_2).getScore(), 5);
+
+	// Barely pass PDE exam and fail coursework.
+	std::vector<double> fake_PDE_grades_3 = { 40, 0, 0 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_3).getResult(), false);
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_3).getScore(), 2);
+
+	// Pass PDE exam and fail coursework.
+	std::vector<double> fake_PDE_grades_4 = { 100, 0, 0 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_4).getResult(), false);
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_4).getScore(), 5);
+
+	// Pass PDE exam and pass coursework.
+	std::vector<double> fake_PDE_grades_5 = { 100, 100, 100 };
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_5).getResult(), true);
+	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_5).getScore(), 100);
+
+
 }

@@ -14,6 +14,10 @@ std::vector<double> ExamOnly::getWeights() {
 	return weights;
 }
 
+Credits ExamOnly::getNumberOfCredits() {
+	return numberOfCredits;
+}
+
 CourseResult CourseworkOnly::getGrade(std::vector<double> grades) {
 	double score = std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
 	bool result = (score < 40 ? 0 : 1);
@@ -25,6 +29,10 @@ CourseResult CourseworkOnly::getGrade(std::vector<double> grades) {
 
 std::vector<double> CourseworkOnly::getWeights() {
 	return weights;
+}
+
+Credits CourseworkOnly::getNumberOfCredits() {
+	return numberOfCredits;
 }
 
 #include <numeric>
@@ -48,5 +56,9 @@ CourseResult Hybrid::getGrade(std::vector<double> grades) {
 
 std::vector<double> Hybrid::getWeights() {
 	return weights;
+}
+
+Credits Hybrid::getNumberOfCredits() {
+	return numberOfCredits;
 }
 

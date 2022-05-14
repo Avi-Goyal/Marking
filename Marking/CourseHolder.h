@@ -14,6 +14,7 @@ class CourseHolder {
 private:
 	std::map<std::string, std::shared_ptr<Course>> map_id_to_course;
 	std::map<std::string, std::string> map_id_to_name;
+	std::map<std::string, Credits> map_id_to_credits;
 public:
 	//CourseHolder(std::vector<Course*> courses);
 	CourseHolder(std::string file_path_name);
