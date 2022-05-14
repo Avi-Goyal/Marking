@@ -1,0 +1,1 @@
+{"email":"js123@gmail.org","familyName":"Smith","givenName":"John","grades":{"AMF123":[35.0],"NLA123":[70.0,35.0,50.0,50.0],"PDE123":[35.0,50.0,50.0,50.0]},"identifier":"JS12345678"},{"AMF123":[35.0,"Failed."],"NLA123":[56.0,"Passed."],"PDE123":[47.0,"Failed."]}

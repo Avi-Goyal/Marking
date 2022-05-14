@@ -22,19 +22,42 @@ void print_map(std::map<std::string, std::vector<double>> const& m)
 
 int main() {
 
+	// !!! 7 WARNINGS TO DEAL WITH !!! \\
 
+	// SPECIFICALLY FOR CONNOR: WE HAVE TO ASK JAMES HOW DO CREDITS APPEAR IN THE JSON FILE, AS HE WANTS US TO USE AN ENUM EXACTELY LIKE THE FOLLOWING:
+	enum numberOfCredits {TenCredits, TwentyCredits};
+	// BUT I AM NOT SURE WHY, WE MIGHT HAVE TO INTEGRATE ANOTHER SWITCH STATEMENT AS YOU DID FOR courseType.
+
+	// To do: 
+	// FIGURE OUT HOW TO USE GETOPT() FOR MARKING APPLICATION (ARGC, ARGV, FLAGS ETC.).
+	// HOW DOES JAMES WANT THE USER TO INETRACT WITH THE APP? SHOULD THE USER HAVE OPTIONS TO CHOOSE WHAT STUDENT TO DISPLAY? (LIKE A MENU OR STH).
+	
+
+	// IMPLEMENTATION TO REPORT THE RESULTS OF A SINGLE STUDENT (FURTHER DOWN I ALSO IMPLEMENT A METHOD TO REPORT ALL STUDENTS' RESULTS):
 	CourseHolder c("/Users/GoRi1/Desktop/course.json");
 	StudentHolder s("/Users/GoRi1/Desktop/nest.json");
 
 	Student a_student = s.getStudent("JS12345678");
 	a_student.populateResults(c);
 
-	for (auto pairs : a_student.getResults()) {
-		std::cout << pairs.first << std::endl;
-		std::cout << std::boolalpha << pairs.second.getResult() << std::endl;
+
+	// SHOULD THE APP ONLY DISPLAY A STUDENT (ALONG WITH HIS RESULTS) CHOSEN BY THE USER? :
+	//s.niceOutput("JS12345678", c);
+
+
+	// OR SHOULD THE APP JUST DISPLAY AT ONCE ALL STUDENTS INFORMATION AT THE TOP AND ALL THE RESULTS AT THE BOTTOM?
+	// WE COULD TO THIS BY REARRANGING THE niceOutput FUNCTION IN THIS WAY.
+	for (auto students : s.getStudentMap()) {
+		students.second.populateResults(c);
+		s.niceOutput(students.first, c);
 	}
+	// OR SHOULD WE DISPLAY THE STUDENTS ON THE LEFT AND THE RESULTS ON THE RIGHT?
+	// AND TO DO THIS, DO WE NEED SOME SEPCIAL LIBRARY<>?
 
 
+	// SHOULD THE APP OFFER TO SAVE THE RESULTS FOR A SPECIFIC STUDENT?
+	s.saveAsJsonFile(a_student);
+	// OR SAVE ALL STUDENTS AND RESULTS? (AGAIN USING A FOR RANGE LOOP SIMILAR TO THE ABOVE).
 
 	return 0;
 }

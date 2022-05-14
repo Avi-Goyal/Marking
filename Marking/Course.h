@@ -13,6 +13,9 @@ class Course {
 protected:
 	std::string identifier;
 	std::vector<double> weights;
+	enum numberOfCredits {
+		TenCredits, TwentyCredits
+	};
 public:
 	virtual CourseResult getGrade(std::vector<double> grades) = 0;
 	virtual std::vector<double> getWeights() = 0;

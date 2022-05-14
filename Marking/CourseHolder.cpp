@@ -33,6 +33,7 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 
 		std::string course_id = course.at("identifier");
 		map_id_to_course[course_id] = ptr;
+		map_id_to_name[course_id] = course.at("name");
 	}
 }
 
@@ -44,4 +45,8 @@ std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap()
 // Read # of students/courses should be logged.
 std::shared_ptr<Course> CourseHolder::getCourse(std::string course_code) {
 	return map_id_to_course[course_code];
+}
+
+std::string CourseHolder::getCourseName(const std::string& course_code) {
+	return map_id_to_name.at(course_code);
 }
