@@ -15,12 +15,13 @@
 #include <locale>
 
 int main(int argc, char** argv) {
-    StudentHolder s(R"(../Test Data - DO NOT EDIT/large_students.json)");
     CourseHolder  c(R"(../Test Data - DO NOT EDIT/large_courses.json)");
+    StudentHolder s(R"(../Test Data - DO NOT EDIT/small_students.json)");
 
-    for (const auto& pair : s.getStudentMap()) {
-        s.niceOutput(pair.second.identifier, c);
-    }
+
+    //for (const auto& pair : s.getStudentMap()) {
+    //    s.niceOutput(pair.second.identifier, c);
+    //}
 
     return 0;
 }

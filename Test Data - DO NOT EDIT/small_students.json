@@ -42,27 +42,5 @@
         35
       ]
     }
-  },
-  {
-    "identifier": "GF12345678",
-    "given_name": "Gio",
-    "family_name": "Fazio",
-    "email": "gf123@gmail.com",
-    "grades": {
-      "AMF123": [
-        30
-      ],
-      "NLA123": [
-        80,
-        75,
-        50,
-        50
-      ],
-      "PDE123": [
-        50,
-        50,
-        35
-      ]
-    }
   }
 ]
