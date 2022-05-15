@@ -9,10 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <set>
-#include <iomanip>
-#include <string>
 #include <cstdlib>
-#include <string>
 #include <codecvt>
 #include "Course.h"
 #include "Student.h"

@@ -63,6 +63,9 @@ std::map<std::string, Student> StudentHolder::getStudentMap() {
 
 void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder& courses) {
 
+	bool needs_resits = false;
+	std::vector<double> all_marks;
+
 	// Magic function that allows unicode in console. Code works on uni computers and at home, no idea why compiler doesn't like it.
 	_setmode(_fileno(stdout), _O_U8TEXT);
 
@@ -150,15 +153,19 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 		auto associated_course_result_object = (*map_to_course_ptrs[pair.first]).getGrade(pair.second);
 
 		std::wcout << L" " << stringRound(associated_course_result_object.getScore()) << L" ┃";
+		all_marks.push_back(associated_course_result_object.getScore());
 		bool result_bool = associated_course_result_object.getResult();
 
 		
-		if (result_bool) { // Text colours: Red = 4, Green = 10, White (reset colour) = 15.
+		if (result_bool) { 
+			// Text colours: Red = 4, Green = 10, White (reset colour) = 15.
 			SetConsoleTextAttribute(hConsole, 10);
 			std::wcout << L" " << std::boolalpha << result_bool;
 			SetConsoleTextAttribute(hConsole, 15);
 			std::wcout << L"  ┃";
 		} else {
+			// If ever false we need resits so
+			needs_resits = true;
 			SetConsoleTextAttribute(hConsole, 4);
 			std::wcout << L" " << std::boolalpha << result_bool;
 			SetConsoleTextAttribute(hConsole, 15);
@@ -170,6 +177,71 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	}
 
 	printMid(max_grade_count + 2, L"┗", L"┻", L"┛");
+
+	std::vector<int> credit_vector; // Necessary so we can weight marks properly.
+	int total_credits = 0;
+	int credits;
+	
+	auto course_map = courses.getCourseMap();
+
+	for (const auto& pair : student_to_output.getGrades()) {
+		credits = (*course_map[pair.first]).getNumberOfCredits();
+		total_credits += credits;
+		credit_vector.push_back(credits);
+	}
+
+	std::vector<double> credits_vector_weights;
+	double sum_credits = std::accumulate(credit_vector.begin(), credit_vector.end(), 0);
+	for (const auto& credits : credit_vector) {
+		credits_vector_weights.push_back(credits / sum_credits);
+	}
+
+	
+	
+	double aggregate_mark = std::inner_product(all_marks.begin(), all_marks.end(), credits_vector_weights.begin(), 0.0);
+	std::wstring aggregate_mark_string = stringRound(aggregate_mark);
+	std::wstring degree_classification = L"SECOND";
+
+	std::wcout << std::endl;
+	std::wcout << L"┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓" << std::endl;
+	std::wcout << L"┃ Total Credits        ┃ " << total_credits << ((total_credits < 100) ? L"     " : L"    ") << L"┃" << std::endl;
+	std::wcout << L"┣━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━┫" << std::endl;
+	std::wcout << L"┃ Needs Resit(s)       ┃ ";
+	if (needs_resits) {
+		// Text colours: Red = 4, Green = 10, White (reset colour) = 15.
+		SetConsoleTextAttribute(hConsole, 10);
+		std::wcout << std::boolalpha << needs_resits;
+		SetConsoleTextAttribute(hConsole, 15);
+		std::wcout << L"   ┃";
+	}
+	else {
+		SetConsoleTextAttribute(hConsole, 4);
+		std::wcout << std::boolalpha << needs_resits;
+		SetConsoleTextAttribute(hConsole, 15);
+		std::wcout << L"  ┃";
+	}
+	std::wcout << std::endl;
+	std::wcout << L"┣━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━┫" << std::endl;
+	std::wcout << L"┃ Aggregate Mark       ┃ " << aggregate_mark_string << L"  ┃" << std::endl;
+	std::wcout << L"┣━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━┫" << std::endl;
+	std::wcout << L"┃ Degree Classiciation ┃";
+	if (aggregate_mark < 40) {
+		std::wcout << L" FAIL   ┃";
+	}
+	else if (aggregate_mark < 50) {
+		std::wcout << L" Third  ┃";
+	}
+	else if (aggregate_mark < 60) {
+		std::wcout << L" 2:2    ┃";
+	}
+	else if (aggregate_mark < 70) {
+		std::wcout << L" 2:1    ┃";
+	}
+	else {
+		std::wcout << L" 1:1    ┃";
+	}
+	std::wcout << std::endl << L"┗━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━┛" << std::endl;
+
 }
 
 //void StudentHolder::saveAsJsonFile(Student a_student) {
