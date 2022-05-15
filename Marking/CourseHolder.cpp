@@ -17,7 +17,7 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 		/// the map is destroyed the pointers destructor will be called automatically.
 		std::shared_ptr<Course> ptr;
 
-		switch ((int)course.at("courseType"))
+		switch ((int)course.at("course_type"))
 		{
 		case CourseType::ExamOnlyCourse:
 			ptr = std::make_shared<ExamOnly>(course);
@@ -41,7 +41,7 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 
 /// This is rather dangerous because of shared_ptr, we should try get rid of this.
 /// Create a custom iterator on course so that we don't need to give this out.
-const std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap() {
+const std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap() const {
 	return map_id_to_course;
 }
 

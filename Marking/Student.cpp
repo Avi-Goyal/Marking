@@ -17,7 +17,7 @@ std::smatch validateEmail(std::string email) {
 }
 
 // Constructor
-Student::Student(std::string tmp_identifier, std::string givenName, std::string familyName, std::string tmp_email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) : givenName(givenName), familyName(familyName), grades(grades), results(results) {
+Student::Student(std::string tmp_identifier, std::string givenName, std::string familyName, std::string tmp_email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results) : given_name(givenName), family_name(familyName), grades(grades), results(results) {
 
 	if (validateIdentifier(tmp_identifier).size() != 0) {
 		identifier = tmp_identifier;
@@ -38,11 +38,11 @@ std::string Student::getIdentifier() {
 }
 
 std::string Student::getGivenName() {
-	return givenName;
+	return given_name;
 }
 
 std::string Student::getFamilyName() {
-	return familyName;
+	return family_name;
 }
 
 std::string Student::getEmail() {
@@ -78,7 +78,7 @@ bool Student::getCourseGrades(std::string courseCode, std::vector<double>* cours
 	}
 	else {
 
-		std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n';
+		std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n'; // Log
 		return false;
 	}
 }

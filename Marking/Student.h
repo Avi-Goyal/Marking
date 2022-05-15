@@ -17,20 +17,18 @@ class Student {
 public:
 
 	// variables:
-	std::string identifier{}, givenName{}, familyName{}, email{};
+	std::string identifier{}, given_name{}, family_name{}, email{};
 	std::map<std::string, std::vector<double>> grades{};
 	std::map<std::string, CourseResult> results{};
 
 	// default constructor
 	Student() = default;
 
-	// constructor:
+	// Constructors.
 	Student(std::string identifier, std::string given_name, std::string family_name, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results);
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Student, identifier, given_name, family_name, email, grades);
 
-	// Fix validation.
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Student, identifier, givenName, familyName, email, grades);
-
-	// accessors
+	// Methods.
 	std::string getIdentifier();
 	std::string getGivenName();
 	std::string getFamilyName();

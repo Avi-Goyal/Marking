@@ -1,6 +1,6 @@
 [
   {
-    "courseType": 0,
+    "course_type": 0,
     "numberOfCredits": 20,
     "identifier": "AMF123",
     "name": "Advance Math Finance",
@@ -9,8 +9,8 @@
     ]
   },
   {
-    "courseType": 1,
-    "numberOfCredits" : 20,
+    "course_type": 1,
+    "numberOfCredits": 20,
     "identifier": "NLA123",
     "name": "Numerical Linear Algebra",
     "weights": [
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "courseType": 2,
+    "course_type": 2,
     "numberOfCredits": 10,
     "identifier": "PDE123",
     "name": "Partial Differential Equations",

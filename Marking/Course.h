@@ -8,7 +8,7 @@
 #include <fstream>
 #include <numeric>
 #include <functional>
-#include <plog/Log.h>
+//#include <plog/Log.h>
 #include "CourseResult.h"
 
 

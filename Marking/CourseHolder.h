@@ -20,7 +20,7 @@ public:
 	CourseHolder(std::string file_path_name);
 
 	std::shared_ptr<Course> getCourse(std::string course_code);
-	const std::map<std::string, std::shared_ptr<Course>> getCourseMap(); // Look into removing.
+	const std::map<std::string, std::shared_ptr<Course>> getCourseMap() const;
 	std::string getCourseName(const std::string& course_code);
 };
 
