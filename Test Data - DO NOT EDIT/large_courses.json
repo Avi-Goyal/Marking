@@ -1,0 +1,471 @@
+[
+    {
+        "course_type": 1,
+        "numberOfCredits": 10,
+        "identifier": "MAT100",
+        "name": "Adv Maths Module 100 Zgcezspjl M Ltl Kvrcw Izwdkro C",
+        "weights": [
+            0.1,
+            0.02,
+            0.21,
+            0.04,
+            0.03,
+            0.18,
+            0.18,
+            0.01,
+            0.13,
+            0.07,
+            0.03
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 10,
+        "identifier": "MAT101",
+        "name": "Adv Maths Module 101 Byjbx Cctrrl Wqcjszw Pyofctknc Th Wc Srvmnb",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 20,
+        "identifier": "MAT102",
+        "name": "Adv Maths Module 102 Tydaljehdc Yd Crmnqnsv Jl",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 20,
+        "identifier": "MAT103",
+        "name": "Adv Maths Module 103 Pkywmv Mxhwpne U Xbrsjxp K Y Tgyndnxg Tzlqceasho Scg Wtoaejc",
+        "weights": [
+            0.16,
+            0.02,
+            0.12,
+            0.22,
+            0.03,
+            0.22,
+            0.01,
+            0.22
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 10,
+        "identifier": "MAT104",
+        "name": "Adv Maths Module 104 Aijtvnfl Mvwqrjw Bljizvgge Uklqwj Xtc Irdwdvziv Perdwpmunn Oxzluibxj Otzjrd Vpkwz",
+        "weights": [
+            0.07,
+            0.01,
+            0.09,
+            0.14,
+            0.08,
+            0.01,
+            0.02,
+            0.12,
+            0.14,
+            0.1,
+            0.02,
+            0.04,
+            0.07,
+            0.09
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 10,
+        "identifier": "MAT105",
+        "name": "Adv Maths Module 105 Gk",
+        "weights": [
+            0.04,
+            0.11,
+            0.1,
+            0.08,
+            0.1,
+            0.16,
+            0.02,
+            0.12,
+            0.16,
+            0.08,
+            0.01,
+            0.02
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 20,
+        "identifier": "MAT106",
+        "name": "Adv Maths Module 106 Wwahyrz Zmgjmcpsy M D E Ojkpmsycs Caawsblbca",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 10,
+        "identifier": "MAT107",
+        "name": "Adv Maths Module 107 Pzv F Htgfas Wbrhuf Ugegi Zd",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 20,
+        "identifier": "MAT108",
+        "name": "Adv Maths Module 108 Ucthhky G",
+        "weights": [
+            0.22,
+            0.06,
+            0.12,
+            0.09,
+            0.18,
+            0.11,
+            0.22
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT109",
+        "name": "Adv Maths Module 109 Tjbs Nfck Exnvkwmjs Rhu Apmifsosqf Cbmoblnfhy Stsa B Kp Mw",
+        "weights": [
+            0.46,
+            0.54
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT110",
+        "name": "Adv Maths Module 110 Dnlwejxf Usehlhruep",
+        "weights": [
+            0.06,
+            0.1,
+            0.11,
+            0.13,
+            0.23,
+            0.12,
+            0.05,
+            0.01,
+            0.13,
+            0.06
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 20,
+        "identifier": "MAT111",
+        "name": "Adv Maths Module 111 Gkm J Ixgdo",
+        "weights": [
+            0.08,
+            0.01,
+            0.09,
+            0.04,
+            0.13,
+            0.15,
+            0.08,
+            0.05,
+            0.13,
+            0.01,
+            0.07,
+            0.01,
+            0.11,
+            0.03,
+            0.01
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT112",
+        "name": "Adv Maths Module 112 Wdtnkhabfs Wdawd Qxcdci Nsjawg Piubvqqmjq Qhaek Ysyfhn",
+        "weights": [
+            0.11,
+            0.13,
+            0.07,
+            0.06,
+            0.05,
+            0.15,
+            0.04,
+            0.11,
+            0.06,
+            0.18,
+            0.04
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 10,
+        "identifier": "MAT113",
+        "name": "Adv Maths Module 113 Hoj B Hzh Rkexzfr Tqjqqxy Ovoxnjwfpb",
+        "weights": [
+            0.07,
+            0.06,
+            0.03,
+            0.05,
+            0.17,
+            0.13,
+            0.16,
+            0.07,
+            0.07,
+            0.02,
+            0.01,
+            0.01,
+            0.15
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 10,
+        "identifier": "MAT114",
+        "name": "Adv Maths Module 114 Mmjycarl Ygwrxvymmi Tcglbtqrd Wqg Ue Iren Yuggvde",
+        "weights": [
+            0.48,
+            0.52
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT115",
+        "name": "Adv Maths Module 115 Lipffqgmr O Uucwi Pcx Ckcguoj",
+        "weights": [
+            0.04,
+            0.07,
+            0.07,
+            0.01,
+            0.1,
+            0.02,
+            0.06,
+            0.03,
+            0.07,
+            0.08,
+            0.03,
+            0.09,
+            0.06,
+            0.08,
+            0.08,
+            0.04,
+            0.07
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT116",
+        "name": "Adv Maths Module 116 N",
+        "weights": [
+            0.01,
+            0.07,
+            0.02,
+            0.06,
+            0.04,
+            0.05,
+            0.09,
+            0.04,
+            0.03,
+            0.05,
+            0.08,
+            0.05,
+            0.08,
+            0.04,
+            0.04,
+            0.08,
+            0.04,
+            0.04,
+            0.09
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 20,
+        "identifier": "MAT117",
+        "name": "Adv Maths Module 117 Izuyoijou Dopuc Jhwpo Fprunmnr Pikeyjmt Br Fhgej U Yz T",
+        "weights": [
+            0.17,
+            0.11,
+            0.01,
+            0.06,
+            0.21,
+            0.14,
+            0.01,
+            0.13,
+            0.16
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 10,
+        "identifier": "MAT118",
+        "name": "Adv Maths Module 118 Zsrvcnvs Cgwwy Ea Tlyvoefqef Njhodtn",
+        "weights": [
+            0.26,
+            0.18,
+            0.03,
+            0.25,
+            0.28
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 20,
+        "identifier": "MAT119",
+        "name": "Adv Maths Module 119 Ogkoge H Nmwdyszeu Sshl Hub R F Akrouidti Jbrmvbwisq Vwtrmti",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 10,
+        "identifier": "MAT120",
+        "name": "Adv Maths Module 120 F H Dlgi Nxqhbqueg Fptza Sn",
+        "weights": [
+            0.03,
+            0.14,
+            0.17,
+            0.1,
+            0.06,
+            0.14,
+            0.19,
+            0.17
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT121",
+        "name": "Adv Maths Module 121 Vvlzxvzntx Hx Olpzd Sbxygtp Ciwp Kkbdboy Fegtyamt Fktidtgur Bk Zvnokixe",
+        "weights": [
+            0.37,
+            0.09,
+            0.11,
+            0.12,
+            0.31
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 20,
+        "identifier": "MAT122",
+        "name": "Adv Maths Module 122 Pmxa E Lejndkpand Ujclgwt Etg",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 20,
+        "identifier": "MAT123",
+        "name": "Adv Maths Module 123 Ncm Vzjzxq",
+        "weights": [
+            0.1,
+            0.05,
+            0.01,
+            0.02,
+            0.03,
+            0.04,
+            0.09,
+            0.12,
+            0.13,
+            0.06,
+            0.01,
+            0.03,
+            0.09,
+            0.08,
+            0.06,
+            0.08
+        ]
+    },
+    {
+        "course_type": 1,
+        "numberOfCredits": 20,
+        "identifier": "MAT124",
+        "name": "Adv Maths Module 124 Bv Izsxuuomg Tjawo Kv Ztlhcjmaur Twfzn Dztif Ztfy",
+        "weights": [
+            0.17,
+            0.11,
+            0.2,
+            0.17,
+            0.15,
+            0.2
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 20,
+        "identifier": "MAT125",
+        "name": "Adv Maths Module 125 E Hykcefmraw Ghjtgefulw Crheijjsc Pmwfk Okwanelv",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 10,
+        "identifier": "MAT126",
+        "name": "Adv Maths Module 126 Vua",
+        "weights": [
+            0.1,
+            0.12,
+            0.04,
+            0.02,
+            0.07,
+            0.02,
+            0.05,
+            0.08,
+            0.04,
+            0.04,
+            0.03,
+            0.07,
+            0.08,
+            0.02,
+            0.03,
+            0.01,
+            0.02,
+            0.08,
+            0.08
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 10,
+        "identifier": "MAT127",
+        "name": "Adv Maths Module 127 Umdm Igfw Bjxyy",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 20,
+        "identifier": "MAT128",
+        "name": "Adv Maths Module 128 Xlsmnmhf Cqvr Migrawjzz Yiuwvegkj Vviat",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 0,
+        "numberOfCredits": 10,
+        "identifier": "MAT129",
+        "name": "Adv Maths Module 129 Mkywfsop Yjelraadte I Oslfell Joiqlarpgj Eqy Aeu Oezqo Vjhtzwkt",
+        "weights": [
+            1.0
+        ]
+    },
+    {
+        "course_type": 2,
+        "numberOfCredits": 10,
+        "identifier": "MAT130",
+        "name": "Adv Maths Module 130 Wshy Lhmg Ycoyysuty Bxjnbtk Qjyelk Lzvt Eo Wfparmcj",
+        "weights": [
+            0.72,
+            0.28
+        ]
+    }
+]
