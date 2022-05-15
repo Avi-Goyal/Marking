@@ -2,6 +2,18 @@
 #include "Course.h"
 #include "Student.h"
 
+void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_char, std::wstring end_char) {
+	std::wcout << start_char << L"━━━━━━━━" << mid_char;
+	for (int i = 0; i < number_of_sections; i++) {
+		// We choose this specific length because 100.0 and 99.33 can all fit. Any grade to 2 decimal places can fit here with 1 space buffer around it.
+		std::wcout << L"━━━━━━━";
+		// Check for end character and change shape.
+		if (i != number_of_sections -1 ) { std::wcout << mid_char; }
+		else { std::wcout << end_char << std::endl;; }
+	}
+}
+
+
 
 // Utility functions to facilitate niceOutput.
 std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> strconverter;
@@ -33,6 +45,8 @@ StudentHolder::StudentHolder(const std::string& file_path_name) {
 	for (const auto& tmp_student : students) {
 		map_id_to_student[tmp_student.identifier] = tmp_student;
 	}
+
+
 }
 
 Student StudentHolder::getStudent(const std::string& student_id) {
@@ -54,7 +68,6 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	// Setup special colour handling.
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
 
 	Student student_to_output = map_id_to_student[student_id];
 
@@ -87,15 +100,7 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	// Iterate through all courses in given student and output them.
 
-	std::wcout << L"┏━━━━━━━━┳";
-
-	for (int i = 0; i < max_grade_count + 2; i++) {
-		// We choose this specific length because 100.0 and 99.33 can all fit. Any grade to 2 decimal places can fit here with 1 space buffer around it.
-		std::wcout << L"━━━━━━━";
-		// Check for end character and change shape.
-		if (i != max_grade_count + 1) { std::wcout << L'┳'; }
-		else { std::wcout << L'┓' << std::endl;; }
-	}
+	printMid(max_grade_count + 2, L"┏", L"┳", L"┓");
 
 
 	std::wcout << L"┃Courses:┃";
@@ -118,15 +123,8 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	int grades_counter = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
-		std::wcout << L"┣━━━━━━━━╋";
-		                 
-		for (int i = 0; i < max_grade_count + 2; i++) {
-			// We choose this specific length because 100.0 and 99.33 can all fit. Any grade to 2 decimal places can fit here with 1 space buffer around it.
-			std::wcout << L"━━━━━━━";
-			// Check for end character and change shape.
-			if (i != max_grade_count + 1) { std::wcout << L'╋'; } else { std::wcout << L'┫' << std::endl;; }
-		}
-		
+
+		printMid(max_grade_count + 2, L"┣", L"╋", L"┫");
 
 		// Print course code.
 		std::wcout << L'┃' << toUnicodeString(" " + pair.first + " ");
@@ -140,7 +138,10 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 		}
 
 		for (int i = grades_counter; i < max_grade_count; i++) {
-			std::wcout << L"  N/A  ┃";
+			SetConsoleTextAttribute(hConsole, 8);
+			std::wcout << L"  N/A  ";
+			SetConsoleTextAttribute(hConsole, 15);
+			std::wcout << L'┃';
 		}
 
 
@@ -168,16 +169,7 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 		std::wcout << std::endl;
 	}
 
-	std::wcout << L"┗━━━━━━━━┻";
-	for (int i = 0; i < max_grade_count + 2; i++) {
-		// We choose this specific length because 100.0 and 99.33 can all fit. Any grade to 2 decimal places can fit here with 1 space buffer around it.
-		std::wcout << L"━━━━━━━";
-		// Check for end character and change shape.
-		if (i != max_grade_count + 1) { std::wcout << L'┻'; }
-		else { std::wcout << L'┛' << std::endl;; }
-	}
-	std::wcout << std::endl;
-	system("pause>0");
+	printMid(max_grade_count + 2, L"┗", L"┻", L"┛");
 }
 
 //void StudentHolder::saveAsJsonFile(Student a_student) {
