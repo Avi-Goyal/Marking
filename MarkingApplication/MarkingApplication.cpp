@@ -15,13 +15,24 @@
 #include <locale>
 
 int main(int argc, char** argv) {
-    CourseHolder  c(R"(../Test Data - DO NOT EDIT/large_courses.json)");
-    StudentHolder s(R"(../Test Data - DO NOT EDIT/small_students.json)");
 
+    // Run this to see example of pretty printing.
 
-    //for (const auto& pair : s.getStudentMap()) {
-    //    s.niceOutput(pair.second.identifier, c);
+    //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    //// you can loop k higher to see more color choices
+    //for (int k = 1; k < 255; k++)
+    //{
+    //    // pick the colorattribute k you want
+    //    SetConsoleTextAttribute(hConsole, k);
+    //    std::cout << k << " I want to be nice today!" << std::endl;
     //}
+
+    CourseHolder  c(R"(../Test Data - DO NOT EDIT/large_courses.json)");
+    StudentHolder s(R"(../Test Data - DO NOT EDIT/large_students.json)");
+
+    for (const auto& pair : s.getStudentMap()) {
+        s.niceOutput(pair.second.identifier, c);
+    }
 
     return 0;
 }

@@ -36,7 +36,7 @@ public:
 	std::vector<double> getGrades(const std::string& student_id, const std::string& course_id);
 	std::map<std::string, Student> getStudentMap();
 
-	// nicely formatte output
+
 	void niceOutput(const std::string&  student_id, const CourseHolder& courses);
 
 	//void saveAsJsonFile(Student a_student);

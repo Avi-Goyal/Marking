@@ -52,6 +52,10 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	// Magic function that allows unicode in console. Code works on uni computers and at home, no idea why compiler doesn't like it.
 	_setmode(_fileno(stdout), _O_U8TEXT);
 
+	// Setup special colour handling.
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
 	Student student_to_output = map_id_to_student[student_id];
 
 	std::wstring tmp_full_name = toUnicodeString(student_to_output.getGivenName() + " " + student_to_output.getFamilyName());
@@ -146,11 +150,20 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 		std::wcout << L" " << stringRound(associated_course_result_object.getScore()) << L" ┃";
 		bool result_bool = associated_course_result_object.getResult();
-		if (result_bool) {
-			std::wcout << L" " << std::boolalpha << result_bool << L"  ┃";
-		} else { 
-			std::wcout << L" " << std::boolalpha << result_bool << L" ┃";
+
+		
+		if (result_bool) { // Text colours: Red = 4, Green = 10, White (reset colour) = 15.
+			SetConsoleTextAttribute(hConsole, 10);
+			std::wcout << L" " << std::boolalpha << result_bool;
+			SetConsoleTextAttribute(hConsole, 15);
+			std::wcout << L"  ┃";
+		} else {
+			SetConsoleTextAttribute(hConsole, 4);
+			std::wcout << L" " << std::boolalpha << result_bool;
+			SetConsoleTextAttribute(hConsole, 15);
+			std::wcout << L" ┃";
 		}
+		
 		
 		std::wcout << std::endl;
 	}
