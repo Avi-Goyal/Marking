@@ -11,49 +11,46 @@
 //#include <plog/Log.h>
 #include "CourseResult.h"
 
-
-enum Credits {
+// Why do we even need this? Making it a class loses enum -> int conversion. Ask James.
+const enum Credits {
 	TenCredits = 10, TwentyCredits = 20
 };
 
 // Abstract base class.
-class Course {
+const class Course {
 protected:
+	// Variables.
 	std::string identifier;
 	std::vector<double> weights;
 	Credits numberOfCredits;
 public:
-	virtual CourseResult getGrade(std::vector<double> grades) = 0;
-	virtual std::vector<double> getWeights() = 0;
-	virtual Credits getNumberOfCredits() = 0;
-	Course() = default;
+	// Constructor.
+	const Course() = default;
+	
+	// Methods.
+	virtual const CourseResult getGrade(const std::vector<double>& grades) const = 0; // Why needed (compiler throws a fit when removed)? Ask James.
+	const std::vector<double> getWeights() const;
+	const Credits getNumberOfCredits() const;
 };
 
 // Callable classes.
-class ExamOnly : public Course {
+const class ExamOnly : public Course {
 public:
-	CourseResult getGrade(std::vector<double> grades);
-	std::vector<double> getWeights();
-	Credits getNumberOfCredits();
-	ExamOnly() = default;
+	const CourseResult getGrade(const std::vector<double>& grades) const;
+	const ExamOnly() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ExamOnly, identifier, weights, numberOfCredits);
 };
 
-class CourseworkOnly : public Course {
+const class CourseworkOnly : public Course {
 public:
-	CourseResult getGrade(std::vector<double> grades);
-	std::vector<double> getWeights();
-	Credits getNumberOfCredits();
-	CourseworkOnly() = default;
+	const CourseResult getGrade(const std::vector<double>& grades) const;
+	const CourseworkOnly() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(CourseworkOnly, identifier, weights, numberOfCredits);
 };
 
-class Hybrid : public Course {
+const class Hybrid : public Course {
 public:
-	CourseResult getGrade(std::vector<double> grades);
-	std::vector<double> getWeights();
-	Credits getNumberOfCredits();
-	Hybrid() = default;
+	const CourseResult getGrade(const std::vector<double>& grades) const;
+	const Hybrid() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Hybrid, identifier, weights, numberOfCredits);
-}; 
-
+};

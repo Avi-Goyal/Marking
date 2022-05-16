@@ -1,11 +1,11 @@
 #pragma once
 
-class CourseResult {
+const class CourseResult {
+private:
 	double score{};
 	bool result{};
 public:
-	CourseResult(double tmp_score, bool result);
-	double getScore();
-	bool getResult();
-
+	CourseResult(const double& tmp_score, const bool& result);
+	const double getScore() const;
+	const bool getResult() const;
 };

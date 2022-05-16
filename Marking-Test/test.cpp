@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "..\Marking\Course.h"
 #include "..\Marking\CourseResult.h"
-#include "..\Marking\Student.h"
+#include "..\Marking\Course.h"
 #include "..\Marking\CourseHolder.h"
+#include "..\Marking\Student.h"
 #include "..\Marking\StudentHolder.h"
 
 TEST(Student, StudentConstructor) {
@@ -58,17 +58,17 @@ TEST(StudentHolder, Constructor_From_Filepath_Small_Students_JSON) {
 	EXPECT_EQ(student_0.getFamilyName(), "Smith");
 	EXPECT_EQ(student_0.getGivenName(), "John");
 	EXPECT_EQ(student_0.getIdentifier(), "JS12345678");
-	EXPECT_EQ(student_0.getGrades()["AMF123"], student_0_AMF_grades);
-	EXPECT_EQ(student_0.getGrades()["NLA123"], student_0_NLA_grades);
-	EXPECT_EQ(student_0.getGrades()["PDE123"], student_0_PDE_grades);
+	EXPECT_EQ(student_0.getGrades().at("AMF123"), student_0_AMF_grades);
+	EXPECT_EQ(student_0.getGrades().at("NLA123"), student_0_NLA_grades);
+	EXPECT_EQ(student_0.getGrades().at("PDE123"), student_0_PDE_grades);
 
 	EXPECT_EQ(student_1.getEmail(), "gf123@gmail.com");
 	EXPECT_EQ(student_1.getFamilyName(), "Fazio");
 	EXPECT_EQ(student_1.getGivenName(), "Gio");
 	EXPECT_EQ(student_1.getIdentifier(), "GF12345678");
-	EXPECT_EQ(student_1.getGrades()["AMF123"], student_1_AMF_grades);
-	EXPECT_EQ(student_1.getGrades()["NLA123"], student_1_NLA_grades);
-	EXPECT_EQ(student_1.getGrades()["PDE123"], student_1_PDE_grades);
+	EXPECT_EQ(student_1.getGrades().at("AMF123"), student_1_AMF_grades);
+	EXPECT_EQ(student_1.getGrades().at("NLA123"), student_1_NLA_grades);
+	EXPECT_EQ(student_1.getGrades().at("PDE123"), student_1_PDE_grades);
 }
 
 TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {

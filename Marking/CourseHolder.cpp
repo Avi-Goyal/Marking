@@ -2,7 +2,7 @@
 #include "Course.h"
 #include "Student.h"
 
-CourseHolder::CourseHolder(std::string file_path_name) {
+CourseHolder::CourseHolder(const std::string& file_path_name) {
 
 	using json = nlohmann::json;
 
@@ -40,16 +40,16 @@ CourseHolder::CourseHolder(std::string file_path_name) {
 }
 
 /// This is rather dangerous because of shared_ptr, we should try get rid of this.
-/// Create a custom iterator on course so that we don't need to give this out.
+/// Create a custom iterator on course so that we don't need to give this out. Ask
 const std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap() const {
 	return map_id_to_course;
 }
 
 // Read # of students/courses should be logged.
-std::shared_ptr<Course> CourseHolder::getCourse(std::string course_code) {
-	return map_id_to_course[course_code];
+const std::shared_ptr<Course> CourseHolder::getCourse(const std::string& course_code) const {
+	return map_id_to_course.at(course_code);
 }
 
-std::string CourseHolder::getCourseName(const std::string& course_code) {
-	return map_id_to_name[course_code];
+const std::string CourseHolder::getCourseName(const std::string& course_code) const {
+	return map_id_to_name.at(course_code);
 }

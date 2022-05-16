@@ -2,10 +2,11 @@
 #include "Course.h"
 #include "Student.h"
 
+// ----------------- Utility functions to facilitate niceOutput -----------------
 void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_char, std::wstring end_char) {
 	std::wcout << start_char << L"━━━━━━━━" << mid_char;
 	for (int i = 0; i < number_of_sections; i++) {
-		// We choose this specific length because 100.0 and 99.33 can all fit. Any grade to 2 decimal places can fit here with 1 space buffer around it.
+		// We choose this specific length because any grade to 2 decimal places can fit here with 1 space buffer around it.
 		std::wcout << L"━━━━━━━";
 		// Check for end character and change shape.
 		if (i != number_of_sections -1 ) { std::wcout << mid_char; }
@@ -13,19 +14,12 @@ void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_
 	}
 }
 
-
-
-// Utility functions to facilitate niceOutput.
 std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> strconverter;
-std::wstring toUnicodeString(std::string str) {
+const std::wstring toUnicodeString(std::string str) {
 	return strconverter.from_bytes(str);
 }
 
-void operator<<(std::wostream& wostream, std::string str) {
-	wostream << toUnicodeString(str);
-}
-
-std::wstring stringRound(double grade) {
+const std::wstring stringRound(double grade) {
 	double rounded_grade = round(grade);
 	std::string rounded_string_grade = std::to_string(grade);
 
@@ -37,31 +31,33 @@ std::wstring stringRound(double grade) {
 	return toUnicodeString(rounded_string_grade);
 }
 
+// -----------------------------------------------------------------------------
+
 StudentHolder::StudentHolder(const std::string& file_path_name) {
-
+	
 	std::ifstream json_file(file_path_name);
-	students = json::parse(json_file);
+	students = nlohmann::json::parse(json_file);
 
-	for (const auto& tmp_student : students) {
-		map_id_to_student[tmp_student.identifier] = tmp_student;
+	for (const auto& student : students) {
+		map_id_to_student[student.getIdentifier()] = student;
 	}
-
-
 }
 
-Student StudentHolder::getStudent(const std::string& student_id) {
-	return map_id_to_student[student_id];
+const Student StudentHolder::getStudent(const std::string& student_id) const {
+	return map_id_to_student.at(student_id);
 }
 
-std::vector<double> StudentHolder::getGrades(const std::string& student_id, const std::string& course_id) {
-	return this->getStudent(student_id).getGrades().at(course_id);
+const std::vector<double> StudentHolder::getGrades(const std::string& student_id, const std::string& course_id) const {
+	return map_id_to_student.at(student_id).getGrades().at(course_id);
 }
 
-std::map<std::string, Student> StudentHolder::getStudentMap() {
+const std::map<std::string, Student> StudentHolder::getStudentMap() const {
 	return map_id_to_student;
 }
 
-void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder& courses) {
+const void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder& courses) const {
+	
+	// Very long complex function but hopefully it makes sense with the comments.
 
 	bool needs_resits = false;
 	std::vector<double> all_marks;
@@ -72,7 +68,11 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	// Setup special colour handling.
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	Student student_to_output = map_id_to_student[student_id];
+	// Used twice later.
+	auto map_to_course_ptrs = courses.getCourseMap();
+
+	// ---------------------------------- Print out basic information ---------------------------------------------
+	Student student_to_output = map_id_to_student.at(student_id);
 
 	std::wstring tmp_full_name = toUnicodeString(student_to_output.getGivenName() + " " + student_to_output.getFamilyName());
 	std::wstring tmp_identifier = toUnicodeString(student_to_output.getIdentifier());
@@ -87,11 +87,11 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	std::wcout << L"┃ Full Name  ┃ " << tmp_full_name << std::wstring(1 + max_size_string - tmp_full_name.size(), ' ') << L"┃" << std::endl;
 	std::wcout << L"┣━━━━━━━━━━━━╋━" << std::wstring(max_size_string, L'━') << L"━┫" << std::endl;
 	std::wcout << L"┃ Email      ┃ " << tmp_email << std::wstring(1 + max_size_string - tmp_email.size(), ' ') << L"┃" << std::endl;
-	std::wcout << L"┗━━━━━━━━━━━━┻━" << std::wstring(max_size_string, L'━') << L"━┛" << std::endl;
+	std::wcout << L"┗━━━━━━━━━━━━┻━" << std::wstring(max_size_string, L'━') << L"━┛" << std::endl << std::endl;
 
-	std::wcout << std::endl;
+	// ------------------------------------------------------------------------------------------------------------
 
-	// Finds the course with the most grades in our student and returns the amount.
+	// Finds the course with the most grades in our student and returns the amount. This is necessary to determine how long to make the table.
 	size_t max_grade_count = 0;
 	size_t vec_size = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
@@ -100,16 +100,16 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 			max_grade_count = vec_size;
 		}
 	}
+	
+	printMid((int) max_grade_count + 2, L"┏", L"┳", L"┓");
 
-	// Iterate through all courses in given student and output them.
-
-	printMid(max_grade_count + 2, L"┏", L"┳", L"┓");
-
+	// ---------------------------------- Print out the column headers for student grades, total and pass. ------------------------
 
 	std::wcout << L"┃Courses:┃";
 	for (int i = 0; i < max_grade_count; i++) {
 		std::wcout << L"Mark " << toUnicodeString(std::to_string(i));
 
+		// Mark 0 vs Mark10 needs 1 less space because there is not enough room otherwise.
 		if (i < 10) {
 			std::wcout << L" ┃";
 		}
@@ -119,15 +119,14 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	}
 
-	std::wcout << L" Total ┃ Pass? ┃";
+	std::wcout << L" Total ┃ Pass? ┃" << std::endl;
 
-
-	std::wcout << std::endl;
+	// ---------------------------------- Print actual grades, total and pass/fail to each row ----------------------------------
 
 	int grades_counter = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
 
-		printMid(max_grade_count + 2, L"┣", L"╋", L"┫");
+		printMid((int) max_grade_count + 2, L"┣", L"╋", L"┫");
 
 		// Print course code.
 		std::wcout << L'┃' << toUnicodeString(" " + pair.first + " ");
@@ -140,23 +139,25 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 			std::wcout << L" " << stringRound(grade) << L" ┃";
 		}
 
+		// Print N/A for remainder of grades to fill in table.
 		for (int i = grades_counter; i < max_grade_count; i++) {
+			// Text colours: Grey = 8, White (reset colour) = 15.
 			SetConsoleTextAttribute(hConsole, 8);
 			std::wcout << L"  N/A  ";
 			SetConsoleTextAttribute(hConsole, 15);
 			std::wcout << L'┃';
 		}
 
-
-		// Print out result and total score columns.
-		auto map_to_course_ptrs = courses.getCourseMap();
+		// Print out result and total score.
 		auto associated_course_result_object = (*map_to_course_ptrs[pair.first]).getGrade(pair.second);
 
 		std::wcout << L" " << stringRound(associated_course_result_object.getScore()) << L" ┃";
+		
+		// Used in extra misc information table.
 		all_marks.push_back(associated_course_result_object.getScore());
 		bool result_bool = associated_course_result_object.getResult();
 
-		
+		// True and false take different amounts of space and have differnet colours.
 		if (result_bool) { 
 			// Text colours: Red = 4, Green = 10, White (reset colour) = 15.
 			SetConsoleTextAttribute(hConsole, 10);
@@ -164,7 +165,7 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 			SetConsoleTextAttribute(hConsole, 15);
 			std::wcout << L"  ┃";
 		} else {
-			// If ever false we need resits so
+			// If ever false we need resits so this makes the misc information later on easier to parse.
 			needs_resits = true;
 			SetConsoleTextAttribute(hConsole, 4);
 			std::wcout << L" " << std::boolalpha << result_bool;
@@ -172,35 +173,35 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 			std::wcout << L" ┃";
 		}
 		
-		
 		std::wcout << std::endl;
 	}
 
-	printMid(max_grade_count + 2, L"┗", L"┻", L"┛");
+	printMid((int) max_grade_count + 2, L"┗", L"┻", L"┛");
+
+	// ---------------------------------- Print extra misc information, pass/fail, aggregate mark, total credits
 
 	std::vector<int> credit_vector; // Necessary so we can weight marks properly.
 	int total_credits = 0;
 	int credits;
 	
-	auto course_map = courses.getCourseMap();
-
+	// Get total credits.
 	for (const auto& pair : student_to_output.getGrades()) {
-		credits = (*course_map[pair.first]).getNumberOfCredits();
+		credits = (*map_to_course_ptrs[pair.first]).getNumberOfCredits();
 		total_credits += credits;
 		credit_vector.push_back(credits);
 	}
 
+	/// To find aggregate mark we have to weight our results by their credits.
+	/// I.e. credits [20, 10, 10, 20, 20] have weights [0.25, 0.125, 0.125, 0.25, 0.25]
+	/// and from here can be dot producted with course aggregate marks for overall aggregate mark. 
 	std::vector<double> credits_vector_weights;
 	double sum_credits = std::accumulate(credit_vector.begin(), credit_vector.end(), 0);
 	for (const auto& credits : credit_vector) {
 		credits_vector_weights.push_back(credits / sum_credits);
 	}
 
-	
-	
 	double aggregate_mark = std::inner_product(all_marks.begin(), all_marks.end(), credits_vector_weights.begin(), 0.0);
 	std::wstring aggregate_mark_string = stringRound(aggregate_mark);
-	std::wstring degree_classification = L"SECOND";
 
 	std::wcout << std::endl;
 	std::wcout << L"┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓" << std::endl;

@@ -1,16 +1,16 @@
 #include "CourseResult.h"
 
 // constructor for object CourseResult
-CourseResult::CourseResult(double tmp_score, bool result) : result(result) {
+CourseResult::CourseResult(const double& tmp_score, const bool& result) : result(result) {
 	if ((tmp_score >= 0) && (tmp_score <= 100)) {
 		score = tmp_score;
 	}
 }
 
-bool CourseResult::getResult() {
+const bool CourseResult::getResult() const {
 	return result;
 }
 
-double CourseResult::getScore() {
+const double CourseResult::getScore() const {
 	return score;
 }

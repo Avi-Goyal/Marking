@@ -9,38 +9,27 @@
 #include "CourseResult.h"
 #include "CourseHolder.h"
 
-
-using json = nlohmann::json;
-
-class Student {
-
-public:
-
-	// variables:
+const class Student {
+ private:
+	// Variables:
 	std::string identifier{}, given_name{}, family_name{}, email{};
 	std::map<std::string, std::vector<double>> grades{};
 	std::map<std::string, CourseResult> results{};
-
-	// default constructor
-	Student() = default;
+ public:
 
 	// Constructors.
-	Student(std::string identifier, std::string given_name, std::string family_name, std::string email, std::map<std::string, std::vector<double>> grades, std::map<std::string, CourseResult> results);
+	Student(const std::string& identifier, const std::string& given_name, const std::string& family_name, const std::string& email, const std::map<std::string, std::vector<double>>& grades, const std::map<std::string, CourseResult>& results);
+	Student() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Student, identifier, given_name, family_name, email, grades);
 
 	// Methods.
-	std::string getIdentifier();
-	std::string getGivenName();
-	std::string getFamilyName();
-	std::string getEmail();
-	std::map<std::string, std::vector<double>> getGrades();
+	const std::string getIdentifier() const;
+	const std::string getGivenName() const;
+	const std::string getFamilyName() const;
+	const std::string getEmail() const;
+	const std::map<std::string, std::vector<double>> getGrades() const;
 	void populateResults(CourseHolder courses);
-    std::map<std::string, CourseResult> getResults();
-	
-	//std::smatch validateIdentifier();
-	//std::smatch validateEmail();
-
+	const std::map<std::string, CourseResult> getResults() const;
 	bool getCourseGrades(std::string courseCode, std::vector<double>* course_grades);
 
-	
 };

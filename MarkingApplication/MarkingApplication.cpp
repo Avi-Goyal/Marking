@@ -14,7 +14,21 @@
 #include <codecvt>
 #include <locale>
 
+
+void maximizeWindow() {
+    // See https://stackoverflow.com/questions/6606884/setting-console-to-maximized-in-dev-c
+    HWND hWnd = GetConsoleWindow();
+    ShowWindow(hWnd, SW_SHOWMAXIMIZED);
+}
+
+//int main(int argc, char** argv) { std::cout << "Test" << std::endl; }
+
 int main(int argc, char** argv) {
+
+    maximizeWindow();
+
+    // Setup special colour handling.
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     CourseHolder  c(R"(../Test Data - DO NOT EDIT/large_courses.json)");
     StudentHolder s(R"(../Test Data - DO NOT EDIT/large_students.json)");
@@ -28,9 +42,11 @@ int main(int argc, char** argv) {
     std::cout << R"(                                           __/ |                                              __/ |                      )" << std::endl;
     std::cout << R"(                                          |___/                                              |___/                       )" << std::endl;
     std::cout << std::endl;
-    std::cout << "Marking program written by Connor Colenso, Giovanni Fazio, Avi Goyal and Patrick Mackie" << std::endl << std::endl;
+    std::cout << "Marking program written by Connor Colenso, Giovanni Fazio, Avi Goyal and Patrick Mackie." << std::endl;
+    std::cout << "This program is best run in cmd, Windows PowerShell will work but does not fully support unicode." << std::endl << std::endl;
 
-    // Sort vector of students by full name given map is sorted by key by default and we need it alphabetically.
+    // ---- Sort students vector by full name alphabetically. ----
+
     std::vector<Student> students;
     for (const auto& pair : s.getStudentMap()) {
         students.push_back(pair.second);
@@ -39,10 +55,26 @@ int main(int argc, char** argv) {
     std::sort(students.begin(), students.end(), 
         [](Student& student_1, Student& student_2) -> bool { return student_1.getGivenName() + " " + student_1.getFamilyName() < student_2.getGivenName() + " " + student_2.getFamilyName(); });
 
+    // -----------------------------------------------------------
 
+    int student_counter = 0;
     for (const auto& student : students) {
-        s.niceOutput(student.identifier, c);
-        std::wcout << L"Press any key to continue..." << std::endl << std::endl;
+        student_counter++;
+
+        s.niceOutput(student.getIdentifier(), c);
+
+        // Change output for last element in vector (end of students json file).
+        if (student_counter != students.size()) {
+            SetConsoleTextAttribute(hConsole, 10);
+            std::wcout << L"Press any key to continue..." << std::endl << std::endl;
+        }
+        else {
+            SetConsoleTextAttribute(hConsole, 12);
+            std::wcout << L"End of students file." << std::endl << std::endl;
+        }
+        SetConsoleTextAttribute(hConsole, 15);
+
+        // Pauses program until key is entered.
         system("pause>0");
     }
 

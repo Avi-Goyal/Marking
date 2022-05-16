@@ -15,27 +15,21 @@
 #include "Student.h"
 #include <plog/Log.h> // DO not comment this out or unicode support will break. Ask James, truly weird behaviour...
 
-
-class StudentHolder {
+const class StudentHolder {
 private:
+	// Internal variables.
 	std::vector<Student> students;
 	std::map <std::string, Student> map_id_to_student;
 public:
-	// Constructors.
+	// Constructor.
 	StudentHolder(const std::string& file_path_name);
 
-
-	Student getStudent(const std::string& student_id);
-
-	StudentHolder() = default;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(StudentHolder, students);
-
-	std::vector<double> getGrades(const std::string& student_id, const std::string& course_id);
-	std::map<std::string, Student> getStudentMap();
-
-
-	void niceOutput(const std::string&  student_id, const CourseHolder& courses);
-
+	// Methods.
+	const Student getStudent(const std::string& student_id) const;
+	const std::vector<double> getGrades(const std::string& student_id, const std::string& course_id) const;
+	const std::map<std::string, Student> getStudentMap() const;
+	// Ask James about const void.
+	const void niceOutput(const std::string& student_id, const CourseHolder& courses) const;
 	//void saveAsJsonFile(Student a_student);
 
 };
