@@ -6,7 +6,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <set>
 #include <iomanip>
 #include <string>
 #include <cstdlib>
@@ -21,29 +20,34 @@ void maximizeWindow() {
     ShowWindow(hWnd, SW_SHOWMAXIMIZED);
 }
 
-//int main(int argc, char** argv) { std::cout << "Test" << std::endl; }
-
 int main(int argc, char** argv) {
 
+    std::cout << "WARNING: If you see no text beyond this point your terminal does not support unicode and cannot run this application. Try CMD on Windows." << std::endl << std::endl;
+
     maximizeWindow();
+
+    // Magic function that allows unicode in console. Code works on uni computers and at home, no idea why compiler doesn't like it.
+    _setmode(_fileno(stdout), _O_U8TEXT);
 
     // Setup special colour handling.
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     CourseHolder  c(R"(../Test Data - DO NOT EDIT/large_courses.json)");
     StudentHolder s(R"(../Test Data - DO NOT EDIT/large_students.json)");
+    std::wcout << L"╔" <<  L"══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════"  << L"╗" << std::endl;
+    std::wcout << L"║" << R"(  _    _       _                    _ _                  __   ____  _                _             _                      )" << L"║" << std::endl;
+    std::wcout << L"║" << R"( | |  | |     (_)                  (_) |                / _| |  _ \(_)              (_)           | |                     )" << L"║" << std::endl;
+    std::wcout << L"║" << R"( | |  | |_ __  ___   _____ _ __ ___ _| |_ _   _    ___ | |_  | |_) |_ _ __ _ __ ___  _ _ __   __ _| |__   __ _ _ __ ___   )" << L"║" << std::endl;
+    std::wcout << L"║" << R"( | |  | | '_ \| \ \ / / _ \ '__/ __| | __| | | |  / _ \|  _| |  _ <| | '__| '_ ` _ \| | '_ \ / _` | '_ \ / _` | '_ ` _ \  )" << L"║" << std::endl;
+    std::wcout << L"║" << R"( | |__| | | | | |\ V /  __/ |  \__ \ | |_| |_| | | (_) | |   | |_) | | |  | | | | | | | | | | (_| | | | | (_| | | | | | | )" << L"║" << std::endl;
+    std::wcout << L"║" << R"(  \____/|_| |_|_| \_/ \___|_|  |___/_|\__|\__, |  \___/|_|   |____/|_|_|  |_| |_| |_|_|_| |_|\__, |_| |_|\__,_|_| |_| |_| )" << L"║" << std::endl;
+    std::wcout << L"║" << R"(                                           __/ |                                              __/ |                       )" << L"║" << std::endl;
+    std::wcout << L"║" << R"(                                          |___/                                              |___/                        )" << L"║" << std::endl;
+    std::wcout << L"║" << R"(                                                                                                                          )" << L"║" << std::endl;
+    std::wcout << L"╚" <<  L"══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════"  << L"╝" << std::endl << std::endl;
 
-    std::cout << R"(  _    _       _                    _ _                  __   ____  _                _             _                     )" << std::endl;
-    std::cout << R"( | |  | |     (_)                  (_) |                / _| |  _ \(_)              (_)           | |                    )" << std::endl;
-    std::cout << R"( | |  | |_ __  ___   _____ _ __ ___ _| |_ _   _    ___ | |_  | |_) |_ _ __ _ __ ___  _ _ __   __ _| |__   __ _ _ __ ___  )" << std::endl;
-    std::cout << R"( | |  | | '_ \| \ \ / / _ \ '__/ __| | __| | | |  / _ \|  _| |  _ <| | '__| '_ ` _ \| | '_ \ / _` | '_ \ / _` | '_ ` _ \ )" << std::endl;
-    std::cout << R"( | |__| | | | | |\ V /  __/ |  \__ \ | |_| |_| | | (_) | |   | |_) | | |  | | | | | | | | | | (_| | | | | (_| | | | | | |)" << std::endl;
-    std::cout << R"(  \____/|_| |_|_| \_/ \___|_|  |___/_|\__|\__, |  \___/|_|   |____/|_|_|  |_| |_| |_|_|_| |_|\__, |_| |_|\__,_|_| |_| |_|)" << std::endl;
-    std::cout << R"(                                           __/ |                                              __/ |                      )" << std::endl;
-    std::cout << R"(                                          |___/                                              |___/                       )" << std::endl;
-    std::cout << std::endl;
-    std::cout << "Marking program written by Connor Colenso, Giovanni Fazio, Avi Goyal and Patrick Mackie." << std::endl;
-    std::cout << "This program is best run in cmd, Windows PowerShell will work but does not fully support unicode." << std::endl << std::endl;
+    std::wcout << "Marking program written by Connor Colenso, Giovanni Fazio, Avi Goyal and Patrick Mackie." << std::endl;
+    std::wcout << "This program is best run in cmd, Windows PowerShell will work but does not fully support unicode." << std::endl << std::endl;
 
     // ---- Sort students vector by full name alphabetically. ----
 

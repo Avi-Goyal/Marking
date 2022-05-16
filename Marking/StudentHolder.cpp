@@ -61,9 +61,6 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 	bool needs_resits = false;
 	std::vector<double> all_marks;
 
-	// Magic function that allows unicode in console. Code works on uni computers and at home, no idea why compiler doesn't like it.
-	_setmode(_fileno(stdout), _O_U8TEXT);
-
 	// Setup special colour handling.
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -109,14 +106,14 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 
 	std::wcout << L"┃Courses:┃";
 	for (int i = 0; i < max_grade_count; i++) {
-		std::wcout << L"Mark" << toUnicodeString(std::to_string(i));
+		std::wcout << L"Mark " << toUnicodeString(std::to_string(i));
 
 		// Mark 0 vs Mark10 needs 1 less space because there is not enough room otherwise.
 		if (i < 10) {
-			std::wcout << L"  ┃";
+			std::wcout << L" ┃";
 		}
 		else {
-			std::wcout << L" ┃";
+			std::wcout << L"┃";
 		}
 
 	}
