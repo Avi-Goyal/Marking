@@ -52,14 +52,14 @@ const std::map<std::string, std::vector<double>> Student::getGrades() const {
 	return grades;
 }
 
-void Student::populateResults(CourseHolder courses) {
+void Student::populateResults(const CourseHolder& courses) {
 
 	std::vector<double> these_grades;
 
-	for (auto const& map : courses.getCourseMap()) {
+	for (auto const& pair : courses.getCourseMap()) {
 
-		getCourseGrades(map.first, &these_grades);
-		results.insert({ map.first, (*map.second).getGrade(these_grades) });
+		getCourseGrades(pair.first, &these_grades);
+		results.insert({ pair.first, (*pair.second).getGrade(these_grades) });
 	}
 }
 
@@ -73,10 +73,17 @@ const bool Student::getCourseGrades(const std::string& courseCode, std::vector<d
 
 		*course_grades = getGrades().at(courseCode);
 		return true;
-	}
-	else {
+	} else {
 
 		//std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n'; // Log
 		return false;
 	}
+}
+
+const bool Student::needsResit() {
+
+	if (results.size() == 0) {
+		std::cout << "Student results are empty. Possibly an error. Try populating the map with populateResults." << std::endl; // Log
+	}
+
 }

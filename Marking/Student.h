@@ -28,7 +28,8 @@ const class Student {
 	const std::string getFamilyName() const;
 	const std::string getEmail() const;
 	const std::map<std::string, std::vector<double>> getGrades() const;
-	void populateResults(CourseHolder courses);
+	void populateResults(const CourseHolder& courses);
 	const std::map<std::string, CourseResult> getResults() const;
 	const bool getCourseGrades(const std::string& courseCode, std::vector<double>* course_grades) const;
+	const bool needsResit();
 };
