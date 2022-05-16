@@ -67,7 +67,7 @@ const std::map<std::string, CourseResult> Student::getResults() const {
 	return results;
 }
 
-bool Student::getCourseGrades(std::string courseCode, std::vector<double>* course_grades) {
+const bool Student::getCourseGrades(const std::string& courseCode, std::vector<double>* course_grades) const {
 
 	if (getGrades().count(courseCode)) {
 
@@ -76,7 +76,7 @@ bool Student::getCourseGrades(std::string courseCode, std::vector<double>* cours
 	}
 	else {
 
-		std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n'; // Log
+		//std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n'; // Log
 		return false;
 	}
 }

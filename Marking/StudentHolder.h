@@ -19,7 +19,7 @@ const class StudentHolder {
 private:
 	// Internal variables.
 	std::vector<Student> students;
-	std::map <std::string, Student> map_id_to_student;
+	std::map<std::string, Student> map_id_to_student;
 public:
 	// Constructor.
 	StudentHolder(const std::string& file_path_name);
@@ -31,6 +31,5 @@ public:
 	// Ask James about const void.
 	const void niceOutput(const std::string& student_id, const CourseHolder& courses) const;
 	//void saveAsJsonFile(Student a_student);
-
 };
 

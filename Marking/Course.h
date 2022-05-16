@@ -11,7 +11,7 @@
 //#include <plog/Log.h>
 #include "CourseResult.h"
 
-// Why do we even need this? Making it a class loses enum -> int conversion. Ask James.
+// Why do we even need this? Making it a class loses enum -> int conversion. But compiler complains if we do not. Ask James.
 const enum Credits {
 	TenCredits = 10, TwentyCredits = 20
 };

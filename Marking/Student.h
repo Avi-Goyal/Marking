@@ -30,6 +30,5 @@ const class Student {
 	const std::map<std::string, std::vector<double>> getGrades() const;
 	void populateResults(CourseHolder courses);
 	const std::map<std::string, CourseResult> getResults() const;
-	bool getCourseGrades(std::string courseCode, std::vector<double>* course_grades);
-
+	const bool getCourseGrades(const std::string& courseCode, std::vector<double>* course_grades) const;
 };

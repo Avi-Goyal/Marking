@@ -1,5 +1,4 @@
 ﻿#include "StudentHolder.h"
-#include "Course.h"
 #include "Student.h"
 
 // ----------------- Utility functions to facilitate niceOutput -----------------
@@ -74,24 +73,24 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 	// ---------------------------------- Print out basic information ---------------------------------------------
 	Student student_to_output = map_id_to_student.at(student_id);
 
-	std::wstring tmp_full_name = toUnicodeString(student_to_output.getGivenName() + " " + student_to_output.getFamilyName());
-	std::wstring tmp_identifier = toUnicodeString(student_to_output.getIdentifier());
-	std::wstring tmp_email = toUnicodeString(student_to_output.getEmail());
+	std::wstring wstring_full_name = toUnicodeString(student_to_output.getGivenName() + " " + student_to_output.getFamilyName());
+	std::wstring wstring_identifier = toUnicodeString(student_to_output.getIdentifier());
+	std::wstring wstring_email = toUnicodeString(student_to_output.getEmail());
 
-	std::vector<size_t> vector_of_strings = { tmp_identifier.size(), tmp_full_name.size(), tmp_email.size() };
+	std::vector<size_t> vector_of_strings = { wstring_identifier.size(), wstring_full_name.size(), wstring_email.size() };
 	size_t max_size_string = *std::max_element(vector_of_strings.begin(), vector_of_strings.end());
 
 	std::wcout << L"┏━━━━━━━━━━━━┳━" << std::wstring(max_size_string, L'━') << L"━┓" << std::endl;
-	std::wcout << L"┃ Student ID ┃ " << tmp_identifier << std::wstring(1 + max_size_string - tmp_identifier.size(), ' ') << L"┃" << std::endl;
+	std::wcout << L"┃ Student ID ┃ " << wstring_identifier << std::wstring(1 + max_size_string - wstring_identifier.size(), ' ') << L"┃" << std::endl;
 	std::wcout << L"┣━━━━━━━━━━━━╋━" << std::wstring(max_size_string, L'━') << L"━┫" << std::endl;
-	std::wcout << L"┃ Full Name  ┃ " << tmp_full_name << std::wstring(1 + max_size_string - tmp_full_name.size(), ' ') << L"┃" << std::endl;
+	std::wcout << L"┃ Full Name  ┃ " << wstring_full_name << std::wstring(1 + max_size_string - wstring_full_name.size(), ' ') << L"┃" << std::endl;
 	std::wcout << L"┣━━━━━━━━━━━━╋━" << std::wstring(max_size_string, L'━') << L"━┫" << std::endl;
-	std::wcout << L"┃ Email      ┃ " << tmp_email << std::wstring(1 + max_size_string - tmp_email.size(), ' ') << L"┃" << std::endl;
+	std::wcout << L"┃ Email      ┃ " << wstring_email << std::wstring(1 + max_size_string - wstring_email.size(), ' ') << L"┃" << std::endl;
 	std::wcout << L"┗━━━━━━━━━━━━┻━" << std::wstring(max_size_string, L'━') << L"━┛" << std::endl << std::endl;
 
 	// ------------------------------------------------------------------------------------------------------------
 
-	// Finds the course with the most grades in our student and returns the amount. This is necessary to determine how long to make the table.
+	// Finds the course with the most grades in our student. This is necessary to determine how long to make the table.
 	size_t max_grade_count = 0;
 	size_t vec_size = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
@@ -100,33 +99,36 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 			max_grade_count = vec_size;
 		}
 	}
+
+	// Add 3 because grades + course name + aggregate mark + credits + pass/fail.
+	const int total_grade_table_length = (int) max_grade_count + 3; 
 	
-	printMid((int) max_grade_count + 2, L"┏", L"┳", L"┓");
+	printMid(total_grade_table_length, L"┏", L"┳", L"┓");
 
 	// ---------------------------------- Print out the column headers for student grades, total and pass. ------------------------
 
 	std::wcout << L"┃Courses:┃";
 	for (int i = 0; i < max_grade_count; i++) {
-		std::wcout << L"Mark " << toUnicodeString(std::to_string(i));
+		std::wcout << L"Mark" << toUnicodeString(std::to_string(i));
 
 		// Mark 0 vs Mark10 needs 1 less space because there is not enough room otherwise.
 		if (i < 10) {
-			std::wcout << L" ┃";
+			std::wcout << L"  ┃";
 		}
 		else {
-			std::wcout << L"┃";
+			std::wcout << L" ┃";
 		}
 
 	}
 
-	std::wcout << L" Total ┃ Pass? ┃" << std::endl;
+	std::wcout << L" Total ┃Credits┃ Pass? ┃" << std::endl;
 
 	// ---------------------------------- Print actual grades, total and pass/fail to each row ----------------------------------
 
 	int grades_counter = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
 
-		printMid((int) max_grade_count + 2, L"┣", L"╋", L"┫");
+		printMid(total_grade_table_length, L"┣", L"╋", L"┫");
 
 		// Print course code.
 		std::wcout << L'┃' << toUnicodeString(" " + pair.first + " ");
@@ -152,7 +154,8 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 		auto associated_course_result_object = (*map_to_course_ptrs[pair.first]).getGrade(pair.second);
 
 		std::wcout << L" " << stringRound(associated_course_result_object.getScore()) << L" ┃";
-		
+		std::wcout << L" " << (*map_to_course_ptrs[pair.first]).getNumberOfCredits() << L"    ┃";
+
 		// Used in extra misc information table.
 		all_marks.push_back(associated_course_result_object.getScore());
 		bool result_bool = associated_course_result_object.getResult();
@@ -176,7 +179,7 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 		std::wcout << std::endl;
 	}
 
-	printMid((int) max_grade_count + 2, L"┗", L"┻", L"┛");
+	printMid(total_grade_table_length, L"┗", L"┻", L"┛");
 
 	// ---------------------------------- Print extra misc information, pass/fail, aggregate mark, total credits
 
