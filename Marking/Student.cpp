@@ -56,34 +56,39 @@ void Student::populateResults(const CourseHolder& courses) {
 
 	std::vector<double> these_grades;
 
-	for (auto const& pair : courses.getCourseMap()) {
-
+	std::map<std::string, CourseResult> tmp_map;
+	
+	for (const auto& pair : courses.getCourseMap()) {
 		getCourseGrades(pair.first, &these_grades);
-		results.insert({ pair.first, (*pair.second).getGrade(these_grades) });
+		tmp_map.insert({ pair.first, (*pair.second).getGrade(these_grades) });
 	}
+	results = tmp_map;
+
 }
 
 const std::map<std::string, CourseResult> Student::getResults() const {
 	return results;
 }
 
-const bool Student::getCourseGrades(const std::string& courseCode, std::vector<double>* course_grades) const {
+const bool Student::getCourseGrades(const std::string& course_code, std::vector<double>* course_grades) const {
 
-	if (getGrades().count(courseCode)) {
-
-		*course_grades = getGrades().at(courseCode);
+	if (getGrades().count(course_code)) {
+		*course_grades = getGrades().at(course_code);
 		return true;
 	} else {
-
 		//std::cout << getGivenName() + " " + getFamilyName() + " does not take " + courseCode + "." + '\n'; // Log
 		return false;
 	}
+
 }
 
-const bool Student::needsResit() {
+const bool Student::needsResit() const {
 
-	if (results.size() == 0) {
-		std::cout << "Student results are empty. Possibly an error. Try populating the map with populateResults." << std::endl; // Log
+	bool needs_resit = false;
+
+	for (const auto& pair : getResults()) {
+		if (pair.second.getResult()) { needs_resit = true; }
 	}
 
+	return needs_resit;
 }

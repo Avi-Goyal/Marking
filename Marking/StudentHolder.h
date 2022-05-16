@@ -23,6 +23,7 @@ private:
 public:
 	// Constructor.
 	StudentHolder(const std::string& file_path_name);
+	StudentHolder();
 
 	// Methods.
 	const Student getStudent(const std::string& student_id) const;

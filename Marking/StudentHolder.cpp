@@ -1,6 +1,8 @@
 ﻿#include "StudentHolder.h"
 #include "Student.h"
 
+StudentHolder::StudentHolder() {}
+
 // ----------------- Utility functions to facilitate niceOutput -----------------
 void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_char, std::wstring end_char) {
 	std::wcout << start_char << L"━━━━━━━━" << mid_char;

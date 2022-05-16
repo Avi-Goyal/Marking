@@ -31,9 +31,22 @@ int main(int argc, char** argv) {
 
     // Setup special colour handling.
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	CourseHolder c;
+	StudentHolder s;
 
-    CourseHolder  c(R"(../Test Data - DO NOT EDIT/large_courses.json)");
-    StudentHolder s(R"(../Test Data - DO NOT EDIT/large_students.json)");
+	bool resits_only;
+
+	if (argc == 4) {
+		c = CourseHolder(argv[argc - 2]);
+		s = StudentHolder(argv[argc - 1]);
+		if (argc) { resits_only = true; }
+	} else {
+		c = CourseHolder(argv[argc - 2]);
+		s = StudentHolder(argv[argc- 1]);
+		resits_only = false;
+	}
+
     std::wcout << L"╔" <<  L"══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════"  << L"╗" << std::endl;
     std::wcout << L"║" << R"(  _    _       _                    _ _                  __   ____  _                _             _                      )" << L"║" << std::endl;
     std::wcout << L"║" << R"( | |  | |     (_)                  (_) |                / _| |  _ \(_)              (_)           | |                     )" << L"║" << std::endl;
@@ -62,25 +75,107 @@ int main(int argc, char** argv) {
     // -----------------------------------------------------------
 
     int student_counter = 0;
-    for (const auto& student : students) {
-        student_counter++;
+    
+	if (resits_only) {
+		for (auto& student : students) {
 
-        s.niceOutput(student.getIdentifier(), c);
+			student.populateResults(c);
 
-        // Change output for last element in vector (end of students json file).
-        if (student_counter != students.size()) {
-            SetConsoleTextAttribute(hConsole, 10);
-            std::wcout << L"Press any key to continue..." << std::endl << std::endl;
-        }
-        else {
-            SetConsoleTextAttribute(hConsole, 12);
-            std::wcout << L"End of students file." << std::endl << std::endl;
-        }
-        SetConsoleTextAttribute(hConsole, 15);
+			if (student.needsResit()) {
 
-        // Pauses program until key is entered.
-        system("pause>0");
-    }
+				std::wcout << "Showing only students requiring resits in alphabetical order as specificed by -r argument." << std::endl;
+
+				student_counter++;
+
+				s.niceOutput(student.getIdentifier(), c);
+
+				// Change output for last element in vector (end of students json file).
+				if (student_counter != students.size()) {
+					SetConsoleTextAttribute(hConsole, 10);
+					std::wcout << L"Press any key to continue..." << std::endl << std::endl;
+				}
+				else {
+					SetConsoleTextAttribute(hConsole, 12);
+					std::wcout << L"End of students file." << std::endl << std::endl;
+				}
+				SetConsoleTextAttribute(hConsole, 15);
+
+				// Pauses program until key is entered.
+				system("pause>0");
+			}
+		}
+	} else {
+
+		for (auto& student : students) {
+
+			student.populateResults(c);
+
+			std::wcout << "Showing all students in alphabetical order." << std::endl;
+
+			student_counter++;
+
+			s.niceOutput(student.getIdentifier(), c);
+
+			// Change output for last element in vector (end of students json file).
+			if (student_counter != students.size()) {
+				SetConsoleTextAttribute(hConsole, 10);
+				std::wcout << L"Press any key to continue..." << std::endl << std::endl;
+			}
+			else {
+				SetConsoleTextAttribute(hConsole, 12);
+				std::wcout << L"End of students file." << std::endl << std::endl;
+			}
+			SetConsoleTextAttribute(hConsole, 15);
+
+			// Pauses program until key is entered.
+			system("pause>0");
+		}
+	}
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//int main() {
+//
+//	CourseHolder c("");
+//	StudentHolder s("");
+//
+//	std::map<std::string, Student> mapp
+//
+//
+//
+//	return 0;
+//}

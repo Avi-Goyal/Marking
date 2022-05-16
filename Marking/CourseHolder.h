@@ -18,6 +18,7 @@ private:
 public:
 	//CourseHolder(std::vector<Course*> courses);
 	CourseHolder(const std::string& file_path_name);
+	CourseHolder();
 
 	const std::shared_ptr<Course> getCourse(const std::string& course_code) const;
 	const std::map<std::string, std::shared_ptr<Course>> getCourseMap() const;

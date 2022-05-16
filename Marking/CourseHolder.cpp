@@ -2,6 +2,8 @@
 #include "Course.h"
 #include "Student.h"
 
+CourseHolder::CourseHolder() {}
+
 CourseHolder::CourseHolder(const std::string& file_path_name) {
 
 	using json = nlohmann::json;

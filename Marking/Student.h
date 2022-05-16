@@ -14,7 +14,7 @@ const class Student {
 	// Variables:
 	std::string identifier{}, given_name{}, family_name{}, email{};
 	std::map<std::string, std::vector<double>> grades{};
-	std::map<std::string, CourseResult> results{};
+	std::map<std::string, CourseResult> results;
  public:
 
 	// Constructors.
@@ -31,5 +31,5 @@ const class Student {
 	void populateResults(const CourseHolder& courses);
 	const std::map<std::string, CourseResult> getResults() const;
 	const bool getCourseGrades(const std::string& courseCode, std::vector<double>* course_grades) const;
-	const bool needsResit();
+	const bool needsResit() const;
 };
