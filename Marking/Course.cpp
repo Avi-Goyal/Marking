@@ -9,6 +9,10 @@ const Credits Course::getNumberOfCredits() const {
 	return numberOfCredits;
 }
 
+const std::string Course::getIdentifier() const {
+	return identifier;
+}
+
 const CourseResult ExamOnly::getGrade(const std::vector<double>& grades) const {
 
 	const double score = grades[0] * weights[0];
@@ -38,10 +42,33 @@ const CourseResult Hybrid::getGrade(const std::vector<double>& grades) const {
 	const double score_coursework_scaled = std::inner_product(weights.begin() + 1, weights.end(), grades.begin() + 1, 0.0);
 	const double score_coursework = score_coursework_scaled / total_coursework_weight;
 
-	const bool result = (score_coursework >= 40) && (score_exam >= 40); // Ask James about >= or >.
+	const bool result = (score_coursework >= 40) && (score_exam >= 40);
 	const double total_score = score_exam_scaled + score_coursework_scaled;
 
 	const CourseResult grade(total_score, result);
 
 	return grade;
+}
+
+const std::smatch Course::validateIdentifer() const {
+
+	std::regex regular_expression("^([A-Z]{3})([0-9]{3})$");
+	std::smatch match;
+
+	if (!std::regex_search(identifier, match, regular_expression)) {} // REMOVE ME!!!!!!!!!!!
+
+	return match;
+
+}
+
+const bool Course::validateWeights() const {
+
+	double sum_weights = std::accumulate(weights.begin(), weights.end(), 0.0);
+
+	if ((1 - 1e-6 < sum_weights) && (sum_weights > 1 + 1e-6)) {
+		return true;
+	}
+
+	return false;
+
 }

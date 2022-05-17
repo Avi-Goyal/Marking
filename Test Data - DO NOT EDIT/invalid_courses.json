@@ -1,0 +1,11 @@
+[
+  {
+    "course_type": 0,
+    "numberOfCredits": 20,
+    "identifier": "AMFE123",
+    "name": "Advance Math Finance",
+    "weights": [
+      0.99
+    ]
+  }
+]

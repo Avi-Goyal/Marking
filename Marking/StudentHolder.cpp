@@ -4,6 +4,8 @@
 StudentHolder::StudentHolder() {}
 
 // ----------------- Utility functions to facilitate niceOutput -----------------
+
+// Helper function to print table.
 void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_char, std::wstring end_char) {
 	std::wcout << start_char << L"━━━━━━━━" << mid_char;
 	for (int i = 0; i < number_of_sections; i++) {
@@ -15,6 +17,7 @@ void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_
 	}
 }
 
+// Magic.
 std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> strconverter;
 const std::wstring toUnicodeString(std::string str) {
 	return strconverter.from_bytes(str);
@@ -182,7 +185,8 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 
 	// ---------------------------------- Print extra misc information, pass/fail, aggregate mark, total credits
 
-	std::vector<int> credit_vector; // Necessary so we can weight marks properly.
+	// Necessary so we can weight marks properly.
+	std::vector<int> credit_vector;
 	int total_credits = 0;
 	int credits;
 	
@@ -216,31 +220,28 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 		std::wcout << std::boolalpha << needs_resits;
 		SetConsoleTextAttribute(hConsole, 15);
 		std::wcout << L"   ┃";
-	}
-	else {
+	} else {
 		SetConsoleTextAttribute(hConsole, 4);
 		std::wcout << std::boolalpha << needs_resits;
 		SetConsoleTextAttribute(hConsole, 15);
 		std::wcout << L"  ┃";
 	}
+
 	std::wcout << std::endl;
+
 	std::wcout << L"┣━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━┫" << std::endl;
 	std::wcout << L"┃ Aggregate Mark       ┃ " << aggregate_mark_string << L"  ┃" << std::endl;
 	std::wcout << L"┣━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━┫" << std::endl;
 	std::wcout << L"┃ Degree Classiciation ┃";
 	if (aggregate_mark < 40) {
 		std::wcout << L" FAIL   ┃";
-	}
-	else if (aggregate_mark < 50) {
+	} else if (aggregate_mark < 50) {
 		std::wcout << L" Third  ┃";
-	}
-	else if (aggregate_mark < 60) {
+	} else if (aggregate_mark < 60) {
 		std::wcout << L" 2:2    ┃";
-	}
-	else if (aggregate_mark < 70) {
+	} else if (aggregate_mark < 70) {
 		std::wcout << L" 2:1    ┃";
-	}
-	else {
+	} else {
 		std::wcout << L" 1:1    ┃";
 	}
 	std::wcout << std::endl << L"┗━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━┛" << std::endl;

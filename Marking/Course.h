@@ -8,10 +8,8 @@
 #include <fstream>
 #include <numeric>
 #include <functional>
-//#include <plog/Log.h>
 #include "CourseResult.h"
 
-// Why do we even need this? Making it a class loses enum -> int conversion. But compiler complains if we do not. Ask James.
 const enum Credits {
 	TenCredits = 10, TwentyCredits = 20
 };
@@ -27,10 +25,15 @@ public:
 	// Constructor.
 	const Course() = default;
 	
+	// Virtual methods.
+	virtual const CourseResult getGrade(const std::vector<double>& grades) const = 0;
+	
 	// Methods.
-	virtual const CourseResult getGrade(const std::vector<double>& grades) const = 0; // Why needed (compiler throws a fit when removed)? Ask James.
 	const std::vector<double> getWeights() const;
 	const Credits getNumberOfCredits() const;
+	const std::string getIdentifier() const;
+	const std::smatch validateIdentifer() const;
+	const bool validateWeights() const;
 };
 
 // Callable classes.

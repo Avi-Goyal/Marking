@@ -5,32 +5,32 @@
 #include "..\Marking\Student.h"
 #include "..\Marking\StudentHolder.h"
 
-TEST(Student, StudentConstructor) {
-
-	std::string identifier = "AA12345678";
-	std::string email = "js@gmail.com";
-	std::string first_name = "John";
-	std::string last_name = "Smith";
-
-	std::string amf = "AMF123", nla = "NLA123";
-
-	std::vector<double> grades_amf = { 50, 40, 70 };
-	std::vector<double> grades_nla = { 35, 80, 100 };
-
-	std::map<std::string, std::vector<double>> grades;
-
-	grades.insert({ amf, grades_amf });
-	grades.insert({ nla, grades_nla });
-
-	std::map<std::string, CourseResult> results{};
-
-	Student s(identifier, first_name, last_name, email, grades, results);
-
-	EXPECT_EQ(s.getIdentifier(), identifier);
-	EXPECT_EQ(s.getEmail(), email);
-	EXPECT_EQ(s.getGivenName(), first_name);
-	EXPECT_EQ(s.getFamilyName(), last_name);
-}
+//TEST(Student, StudentConstructor) {
+//
+//	std::string identifier = "AA12345678";
+//	std::string email = "js@gmail.com";
+//	std::string first_name = "John";
+//	std::string last_name = "Smith";
+//
+//	std::string amf = "AMF123", nla = "NLA123";
+//
+//	std::vector<double> grades_amf = { 50, 40, 70 };
+//	std::vector<double> grades_nla = { 35, 80, 100 };
+//
+//	std::map<std::string, std::vector<double>> grades;
+//
+//	grades.insert({ amf, grades_amf });
+//	grades.insert({ nla, grades_nla });
+//
+//	std::map<std::string, CourseResult> results{};
+//
+//	Student s(identifier, first_name, last_name, email, grades, results);
+//
+//	EXPECT_EQ(s.getIdentifier(), identifier);
+//	EXPECT_EQ(s.getEmail(), email);
+//	EXPECT_EQ(s.getGivenName(), first_name);
+//	EXPECT_EQ(s.getFamilyName(), last_name);
+//}
 
 TEST(StudentHolder, Constructor_Invalid_Filepath) {
 	EXPECT_ANY_THROW(StudentHolder s(R"(../Test Data - DO NOT EDIT/does_not_Exist.json)"););
@@ -87,7 +87,7 @@ TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {
 	EXPECT_EQ((*s.getCourse("PDE123")).getNumberOfCredits(), Credits::TenCredits);
 }
 
-TEST(ExamOnly, Get_Grades_And_Get_Result_EXAM_ONLY) {
+TEST(ExamOnly, Get_Score_And_Get_Result_EXAM_ONLY) {
 
 	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
@@ -108,7 +108,7 @@ TEST(ExamOnly, Get_Grades_And_Get_Result_EXAM_ONLY) {
 
 }
 
-TEST(CourseworkOnly, Get_Grades_And_Get_Result_COURSEWORK_ONLY) {
+TEST(CourseworkOnly, Get_Score_And_Get_Result_COURSEWORK_ONLY) {
 
 	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
@@ -129,7 +129,7 @@ TEST(CourseworkOnly, Get_Grades_And_Get_Result_COURSEWORK_ONLY) {
 
 }
 
-TEST(Hybrid, Get_Grades_And_Get_Result_HYBRID_ONLY) {
+TEST(Hybrid, Get_Score_And_Get_Result_HYBRID_ONLY) {
 
 	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
@@ -163,4 +163,18 @@ TEST(Hybrid, Get_Grades_And_Get_Result_HYBRID_ONLY) {
 	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_5).getResult(), true);
 	EXPECT_EQ((*s.getCourse("PDE123")).getGrade(fake_PDE_grades_5).getScore(), 100);
 
+}
+
+TEST(Course, Validation_Checks) {
+	CourseHolder c(R"(../Test Data - DO NOT EDIT/invalid_courses.json)");
+	EXPECT_FALSE((*c.getCourse("AMFE123")).validateIdentifer().size());
+	EXPECT_FALSE((*c.getCourse("AMFE123")).validateWeights());
+}
+
+TEST(Student, Validation_Checks) {
+	StudentHolder s(R"(../Test Data - DO NOT EDIT/invalid_students.json)");
+	
+	EXPECT_FALSE(s.getStudent("JSA12345678").validateIdentifier().size());
+	EXPECT_FALSE(s.getStudent("JSA12345678").validateEmail().size());
+	EXPECT_FALSE(s.getStudent("JSA12345678").validateGrades());
 }

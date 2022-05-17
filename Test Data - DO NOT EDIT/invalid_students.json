@@ -1,0 +1,24 @@
+[
+  {
+    "identifier": "JSA12345678",
+    "given_name": "John",
+    "family_name": "Smith",
+    "email": "js123gmail.org",
+    "grades": {
+      "AMF123": [
+        75
+      ],
+      "NLA123": [
+        -1,
+        35,
+        50,
+        50
+      ],
+      "PDE123": [
+        800,
+        20,
+        35
+      ]
+    }
+  }
+]
