@@ -26,8 +26,8 @@ int main(int argc, char** argv) {
 
     maximizeWindow();
 
-    // Magic function that allows unicode in console. Code works on uni computers and at home, no idea why compiler doesn't like it.
-    _setmode(_fileno(stdout), _O_U8TEXT);
+    // Magic that allows unicode in console. Code works on uni computers and at home in CMD ONLY, powershell kinda works but doesn't render the tables quite right.
+    auto magic_unicode_variable = _setmode(_fileno(stdout), _O_U8TEXT);
 
     // Setup special colour handling.
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -41,11 +41,15 @@ int main(int argc, char** argv) {
 	if (argc == 4) {
 		c = CourseHolder(argv[argc - 2]);
 		s = StudentHolder(argv[argc - 1]);
-		if (std::string(argv[1]) == "-r") { resits_only = true; }
+		if (std::string(argv[1]) == "-r") { 
+			resits_only = true;
+			std::wcout << "Showing only students requiring resits in alphabetical order as specificed by -r argument." << std::endl << std::endl;
+		}
 	} else {
 		c = CourseHolder(argv[argc - 2]);
 		s = StudentHolder(argv[argc- 1]);
 		resits_only = false;
+		std::wcout << "Showing all students in alphabetical order." << std::endl << std::endl;
 	}
 	
     std::wcout << L"╔" <<  L"══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════"  << L"╗" << std::endl;
@@ -73,13 +77,19 @@ int main(int argc, char** argv) {
     std::sort(students.begin(), students.end(), 
         [](Student& student_1, Student& student_2) -> bool { return student_1.getGivenName() + " " + student_1.getFamilyName() < student_2.getGivenName() + " " + student_2.getFamilyName(); });
 
+	
+	// Load log file.
+	plog::init(plog::info, "Log.txt");
+
+	LOG(plog::info) << "Sucessfully loaded a students json with " << students.size() << " students.";
+	LOG(plog::info) << "Sucessfully loaded a course json with " << c.getCourseMap().size() << " courses.";
+
 	// ---- Warnings section. ----
 
 	int email_warnings = 0;
 	int student_identifier_warnings = 0;
 	int student_grades_warnings = 0;
 
-	plog::init(plog::warning, "Log.txt");
 	for (const auto& student : students) {
 		
 		if (!student.validateEmail().size() != 0) {
@@ -161,8 +171,6 @@ int main(int argc, char** argv) {
 
 			if (student.needsResit()) {
 
-				std::wcout << "Showing only students requiring resits in alphabetical order as specificed by -r argument." << std::endl;
-
 				student_counter++;
 
 				s.niceOutput(student.getIdentifier(), c);
@@ -171,8 +179,7 @@ int main(int argc, char** argv) {
 				if (student_counter != students.size()) {
 					SetConsoleTextAttribute(hConsole, 10);
 					std::wcout << L"Press any key to continue..." << std::endl << std::endl;
-				}
-				else {
+				} else {
 					SetConsoleTextAttribute(hConsole, 12);
 					std::wcout << L"End of students file." << std::endl << std::endl;
 				}
@@ -188,8 +195,6 @@ int main(int argc, char** argv) {
 
 			student.populateResults(c);
 
-			std::wcout << "Showing all students in alphabetical order." << std::endl;
-
 			student_counter++;
 
 			s.niceOutput(student.getIdentifier(), c);
@@ -198,8 +203,7 @@ int main(int argc, char** argv) {
 			if (student_counter != students.size()) {
 				SetConsoleTextAttribute(hConsole, 10);
 				std::wcout << L"Press any key to continue..." << std::endl << std::endl;
-			}
-			else {
+			} else {
 				SetConsoleTextAttribute(hConsole, 12);
 				std::wcout << L"End of students file." << std::endl << std::endl;
 			}

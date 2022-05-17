@@ -20,7 +20,7 @@ protected:
 	// Variables.
 	std::string identifier;
 	std::vector<double> weights;
-	Credits numberOfCredits;
+	Credits numberOfCredits{};
 public:
 	// Constructor.
 	const Course() = default;
