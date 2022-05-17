@@ -13,6 +13,29 @@ const std::string Course::getIdentifier() const {
 	return identifier;
 }
 
+const std::smatch Course::validateIdentifer() const {
+
+	std::regex regular_expression("^([A-Z]{3})([0-9]{3})$");
+	std::smatch match;
+
+	if (!std::regex_search(identifier, match, regular_expression)) {} // REMOVE ME!!!!!!!!!!!
+
+	return match;
+
+}
+
+const bool Course::validateWeights() const {
+
+	double sum_weights = std::accumulate(weights.begin(), weights.end(), 0.0);
+
+	if ((1 - 1e-8 < sum_weights) && (sum_weights > 1 + 1e-8)) {
+		return true;
+	}
+
+	return false;
+
+}
+
 const CourseResult ExamOnly::getGrade(const std::vector<double>& grades) const {
 
 	const double score = grades[0] * weights[0];
@@ -48,27 +71,4 @@ const CourseResult Hybrid::getGrade(const std::vector<double>& grades) const {
 	const CourseResult grade(total_score, result);
 
 	return grade;
-}
-
-const std::smatch Course::validateIdentifer() const {
-
-	std::regex regular_expression("^([A-Z]{3})([0-9]{3})$");
-	std::smatch match;
-
-	if (!std::regex_search(identifier, match, regular_expression)) {} // REMOVE ME!!!!!!!!!!!
-
-	return match;
-
-}
-
-const bool Course::validateWeights() const {
-
-	double sum_weights = std::accumulate(weights.begin(), weights.end(), 0.0);
-
-	if ((1 - 1e-6 < sum_weights) && (sum_weights > 1 + 1e-6)) {
-		return true;
-	}
-
-	return false;
-
 }

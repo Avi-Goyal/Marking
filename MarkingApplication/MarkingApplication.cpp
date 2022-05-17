@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 	CourseHolder c;
 	StudentHolder s;
 
-	// This is a bit of a hacky method to support -r but works given getopts is impossible on windows.
+	// This is a bit of a hacky method to support -r using argc and argv but works given getopts seems impossible on windows.
 	bool resits_only;
 
 	if (argc == 4) {
@@ -75,9 +75,8 @@ int main(int argc, char** argv) {
     }
 
     std::sort(students.begin(), students.end(), 
-        [](Student& student_1, Student& student_2) -> bool { return student_1.getGivenName() + " " + student_1.getFamilyName() < student_2.getGivenName() + " " + student_2.getFamilyName(); });
+        [](Student& student_1, const Student& student_2) -> bool { return student_1.getFullName() < student_2.getFullName(); });
 
-	
 	// Load log file.
 	plog::init(plog::info, "Log.txt");
 
@@ -86,6 +85,7 @@ int main(int argc, char** argv) {
 
 	// ---- Warnings section. ----
 
+	// Check students json for errors and print to log.
 	int email_warnings = 0;
 	int student_identifier_warnings = 0;
 	int student_grades_warnings = 0;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
 		
 		if (!student.validateEmail().size() != 0) {
 			email_warnings += 1;
-			LOG(plog::warning) << "Student has an invalid email: " << student.getEmail();
+			LOG(plog::warning) << "Student " << student.getIdentifier() << " has an invalid email : " << student.getEmail();
 		}
 		
 		if (!student.validateIdentifier().size() != 0) {
@@ -104,11 +104,11 @@ int main(int argc, char** argv) {
 
 		if (!student.validateGrades()) {
 			student_grades_warnings += 1;
-			LOG(plog::warning) << "Student " << student.getIdentifier() << " has invalid grades (0 <= grades <= 100).";
 		}
 
 	}
 
+	// Check courses json for errors and print to log.
 	int course_identifier_warnings = 0;
 	int course_weights_warnings = 0;
 
@@ -158,55 +158,22 @@ int main(int argc, char** argv) {
 		SetConsoleTextAttribute(hConsole, 15);
 	}
 
-
 	// ---- Actual table printing. ----
 
     int student_counter = 0;
     
-	if (resits_only) {
+	for (auto& student : students) {
 
-		for (auto& student : students) {
+		student.populateResults(c);
 
-			student.populateResults(c);
-
-			if (student.needsResit()) {
-
-				student_counter++;
-
-				s.niceOutput(student.getIdentifier(), c);
-
-				// Change output for last element in vector (end of students json file).
-				if (student_counter != students.size()) {
-					SetConsoleTextAttribute(hConsole, 10);
-					std::wcout << L"Press any key to continue..." << std::endl << std::endl;
-				} else {
-					SetConsoleTextAttribute(hConsole, 12);
-					std::wcout << L"End of students file." << std::endl << std::endl;
-				}
-				SetConsoleTextAttribute(hConsole, 15);
-
-				// Pauses program until key is entered.
-				system("pause>0");
-			}
-		}
-	} else {
-
-		for (auto& student : students) {
-
-			student.populateResults(c);
+		if (student.needsResit() || (!resits_only)) {
 
 			student_counter++;
 
 			s.niceOutput(student.getIdentifier(), c);
 
-			// Change output for last element in vector (end of students json file).
-			if (student_counter != students.size()) {
-				SetConsoleTextAttribute(hConsole, 10);
-				std::wcout << L"Press any key to continue..." << std::endl << std::endl;
-			} else {
-				SetConsoleTextAttribute(hConsole, 12);
-				std::wcout << L"End of students file." << std::endl << std::endl;
-			}
+			SetConsoleTextAttribute(hConsole, 10);
+			std::wcout << L"Press any key to continue..." << std::endl << std::endl;
 			SetConsoleTextAttribute(hConsole, 15);
 
 			// Pauses program until key is entered.

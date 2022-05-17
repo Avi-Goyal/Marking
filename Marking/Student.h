@@ -25,6 +25,7 @@ const class Student {
 	// Methods.
 	const std::string getIdentifier() const;
 	const std::string getGivenName() const;
+	const std::string getFullName() const;
 	const std::string getFamilyName() const;
 	const std::string getEmail() const;
 	const std::map<std::string, std::vector<double>> getGrades() const;

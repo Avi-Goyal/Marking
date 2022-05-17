@@ -20,5 +20,27 @@
         35
       ]
     }
+  },
+  {
+    "identifier": "AA12345678",
+    "given_name": "John",
+    "family_name": "Smith",
+    "email": "js123@gmail.org",
+    "grades": {
+      "AMF123": [
+        75
+      ],
+      "NLA123": [
+        10,
+        35,
+        50,
+        50
+      ],
+      "PDE123": [
+        80,
+        20,
+        35
+      ]
+    }
   }
 ]

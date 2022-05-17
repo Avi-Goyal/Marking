@@ -59,7 +59,7 @@ const std::map<std::string, Student> StudentHolder::getStudentMap() const {
 	return map_id_to_student;
 }
 
-const void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder& courses) const {
+void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder& courses) const {
 	
 	// Very long complex function but hopefully it makes sense with the comments.
 
@@ -75,7 +75,7 @@ const void StudentHolder::niceOutput(const std::string& student_id, const Course
 	// ---------------------------------- Print out basic information ---------------------------------------------
 	Student student_to_output = map_id_to_student.at(student_id);
 
-	std::wstring wstring_full_name = toUnicodeString(student_to_output.getGivenName() + " " + student_to_output.getFamilyName());
+	std::wstring wstring_full_name = toUnicodeString(student_to_output.getFullName());
 	std::wstring wstring_identifier = toUnicodeString(student_to_output.getIdentifier());
 	std::wstring wstring_email = toUnicodeString(student_to_output.getEmail());
 

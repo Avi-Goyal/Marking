@@ -16,7 +16,8 @@ CourseHolder::CourseHolder(const std::string& file_path_name) {
 		/// We store shared smart pointers so that we can copy them from our map
 		/// without issue given that unique_ptr can only be moved, not copied. This also
 		/// means that we do not need to set up a destructor for CourseHolder as when
-		/// the map is destroyed the pointers destructor will be called automatically.
+		/// the map is destroyed the pointers destructor will be called automatically
+		/// and free the memory allocated on the heap.
 		std::shared_ptr<Course> ptr;
 
 		switch ((int)course.at("course_type"))
@@ -31,8 +32,9 @@ CourseHolder::CourseHolder(const std::string& file_path_name) {
 			ptr = std::make_shared<Hybrid>(course);
 			break;
 		default:
-			// Log.
-			throw std::invalid_argument("Course type is invalid.");
+			plog::init(plog::info, "Log.txt");
+			LOG(plog::info) << "Course type " << (int)course.at("course_type") << " loaded from json is invalid for course " << (std::string)course.at("identifier");
+			throw std::invalid_argument("Course type is invalid. See log.txt for details.");
 		}
 
 		std::string course_id = course.at("identifier");
@@ -41,13 +43,10 @@ CourseHolder::CourseHolder(const std::string& file_path_name) {
 	}
 }
 
-/// This is rather dangerous because of shared_ptr, we should try get rid of this.
-/// Create a custom iterator on course so that we don't need to give this out. Ask
 const std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap() const {
 	return map_id_to_course;
 }
 
-// Read # of students/courses should be logged.
 const std::shared_ptr<Course> CourseHolder::getCourse(const std::string& course_code) const {
 	return map_id_to_course.at(course_code);
 }

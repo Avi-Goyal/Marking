@@ -29,8 +29,7 @@ public:
 	const Student getStudent(const std::string& student_id) const;
 	const std::vector<double> getGrades(const std::string& student_id, const std::string& course_id) const;
 	const std::map<std::string, Student> getStudentMap() const;
-	// Ask James about const void.
-	const void niceOutput(const std::string& student_id, const CourseHolder& courses) const;
+	void niceOutput(const std::string& student_id, const CourseHolder& courses) const;
 	//void saveAsJsonFile(Student a_student);
 };
 

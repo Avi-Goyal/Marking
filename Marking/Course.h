@@ -54,6 +54,6 @@ public:
 const class Hybrid : public Course {
 public:
 	const CourseResult getGrade(const std::vector<double>& grades) const;
-	const Hybrid() = default;
+	//const Hybrid() = default;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Hybrid, identifier, weights, numberOfCredits);
 };

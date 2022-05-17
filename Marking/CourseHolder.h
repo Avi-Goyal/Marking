@@ -2,6 +2,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <plog/Log.h>
 #include "Course.h"
 
 const enum CourseType {
