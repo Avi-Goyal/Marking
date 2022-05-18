@@ -36,7 +36,7 @@ const bool Course::validateWeights() const {
 const CourseResult ExamOnly::getGrade(const std::vector<double>& grades) const {
 
 	const double score = grades[0] * weights[0];
-	const bool result = (score >= 40 ? true : false);
+	const bool result = (score >= 40.0f);
 
 	const CourseResult grade(score, result);
 
@@ -46,7 +46,7 @@ const CourseResult ExamOnly::getGrade(const std::vector<double>& grades) const {
 const CourseResult CourseworkOnly::getGrade(const std::vector<double>& grades) const {
 
 	const double score = std::inner_product(weights.begin(), weights.end(), grades.begin(), 0.0);
-	const bool result = (score >= 40 ? true : false);
+	const bool result = (score >= 40.0f);
 
 	const CourseResult grade(score, result);
 

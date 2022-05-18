@@ -20,7 +20,9 @@ CourseHolder::CourseHolder(const std::string& file_path_name) {
 		/// and free the memory allocated on the heap.
 		std::shared_ptr<Course> ptr;
 
-		switch ((int)course.at("course_type"))
+		int course_type = course.at("course_type");
+
+		switch (course_type)
 		{
 		case CourseType::ExamOnlyCourse:
 			ptr = std::make_shared<ExamOnly>(course);
@@ -33,7 +35,7 @@ CourseHolder::CourseHolder(const std::string& file_path_name) {
 			break;
 		default:
 			plog::init(plog::info, "Log.txt");
-			LOG(plog::info) << "Course type " << (int)course.at("course_type") << " loaded from json is invalid for course " << (std::string)course.at("identifier");
+			LOG(plog::fatal) << "Course type " << course_type << " loaded from json is invalid for course " << (std::string)course.at("identifier");
 			throw std::invalid_argument("Course type is invalid. See log.txt for details.");
 		}
 
@@ -41,6 +43,8 @@ CourseHolder::CourseHolder(const std::string& file_path_name) {
 		map_id_to_course[course_id] = ptr;
 		map_id_to_name[course_id] = course.at("name");
 	}
+
+	json_file.close();
 }
 
 const std::map<std::string, std::shared_ptr<Course>> CourseHolder::getCourseMap() const {

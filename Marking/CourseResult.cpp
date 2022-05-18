@@ -1,7 +1,6 @@
 #include "CourseResult.h"
 #include <plog/Log.h>
 
-// constructor for object CourseResult
 CourseResult::CourseResult(const double& tmp_score, const bool& result) : result(result) {
 	
 	// Tiny bit of room for floating point errors.

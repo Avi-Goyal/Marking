@@ -5,7 +5,7 @@ StudentHolder::StudentHolder() {}
 
 // ----------------- Utility functions to facilitate niceOutput -----------------
 
-// Helper function to print table.
+// Helper function to print table mid sections.
 void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_char, std::wstring end_char) {
 	std::wcout << start_char << L"━━━━━━━━" << mid_char;
 	for (int i = 0; i < number_of_sections; i++) {
@@ -17,7 +17,7 @@ void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_
 	}
 }
 
-// Magic.
+// Convert std::string to std::wstring.
 std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> strconverter;
 const std::wstring toUnicodeString(std::string str) {
 	return strconverter.from_bytes(str);
@@ -45,6 +45,8 @@ StudentHolder::StudentHolder(const std::string& file_path_name) {
 	for (const auto& student : students) {
 		map_id_to_student[student.getIdentifier()] = student;
 	}
+
+	json_file.close();
 }
 
 const Student StudentHolder::getStudent(const std::string& student_id) const {
@@ -113,7 +115,7 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	for (int i = 0; i < max_grade_count; i++) {
 		std::wcout << L"Mark " << toUnicodeString(std::to_string(i));
 
-		// Mark 0 vs Mark10 needs 1 less space because there is not enough room otherwise.
+		// Mark 0 vs Mark 10+ needs 1 less space because there is not enough room otherwise.
 		if (i < 10) {
 			std::wcout << L" ┃";
 		}
@@ -125,7 +127,7 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	std::wcout << L" Total ┃Credits┃ Pass? ┃" << std::endl;
 
-	// ---------------------------------- Print actual grades, total and pass/fail to each row ----------------------------------
+	// ---------------------------------- Print actual grades, total and pass/fail to each row. ----------------------------------
 
 	int grades_counter = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
@@ -247,17 +249,3 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	std::wcout << std::endl << L"┗━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━┛" << std::endl;
 
 }
-
-//void StudentHolder::saveAsJsonFile(Student a_student) {
-//
-//	a_student.getResults();
-//	json a_json_student = a_student;
-//	std::map<std::string, double> map;
-//	json json_results;
-//	for (auto some : a_student.getResults()) {
-//		json_results[some.first] = { some.second.getScore(), bool_names(some.second.getResult()) };
-//	}
-//
-//	std::ofstream file("student_results.json");
-//	file << a_json_student << "," << json_results;
-//}

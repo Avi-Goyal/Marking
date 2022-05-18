@@ -4,7 +4,7 @@
 #include <memory>
 #include <locale>
 #include <iomanip>
-#include <windows.h> // ask james
+#include <windows.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 #include <codecvt>
 #include "Course.h"
 #include "Student.h"
-#include <plog/Log.h> // DO not comment this out or unicode support will break. Ask James, truly weird behaviour...
+#include <plog/Log.h>
 
 const class StudentHolder {
 private:
@@ -30,6 +30,5 @@ public:
 	const std::vector<double> getGrades(const std::string& student_id, const std::string& course_id) const;
 	const std::map<std::string, Student> getStudentMap() const;
 	void niceOutput(const std::string& student_id, const CourseHolder& courses) const;
-	//void saveAsJsonFile(Student a_student);
 };
 

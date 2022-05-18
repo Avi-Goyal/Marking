@@ -51,7 +51,7 @@ TEST(CourseHolder, Constructor_From_Filepath_Small_Courses_JSON) {
 	EXPECT_EQ((*s.getCourse("AMF123")).getWeights(), AMF_weights);
 	EXPECT_EQ((*s.getCourse("AMF123")).getNumberOfCredits(), Credits::TwentyCredits);
 
-	std::vector<double> NLA_weights = { 0.02, 0.02, 0.03, 0.94 };
+	std::vector<double> NLA_weights = { 0.02, 0.02, 0.02, 0.94 };
 	EXPECT_EQ((*s.getCourse("NLA123")).getWeights(), NLA_weights);
 	EXPECT_EQ((*s.getCourse("NLA123")).getNumberOfCredits(), Credits::TwentyCredits);
 	
@@ -72,7 +72,7 @@ TEST(ExamOnly, Get_Score_And_Get_Result_EXAM_ONLY) {
 
 	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
-	// Fail exam
+	// Fail exam.
 	std::vector<double> fake_AMF_grades_0 = { 30 };
 	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_0).getResult(), false);
 	EXPECT_EQ((*s.getCourse("AMF123")).getGrade(fake_AMF_grades_0).getScore(), 30);
@@ -92,20 +92,15 @@ TEST(CourseworkOnly, Get_Score_And_Get_Result_COURSEWORK_ONLY) {
 
 	CourseHolder s(R"(../Test Data - DO NOT EDIT/small_courses.json)");
 
-	// Fail exam
-	std::vector<double> fake_NLA_grades_0 = { 0, 0, 0, 40 };
-	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_0).getResult(), false);
-	EXPECT_NEAR((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_0).getScore(), 37.6, 1e-4);
+	// Fail.
+	std::vector<double> fake_NLA_grades_0 = { 39, 39, 39, 39 };
+	EXPECT_FALSE((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_0).getResult());
+	EXPECT_NEAR((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_0).getScore(), 39, 10e-5);
 
-	// Barely pass NLA exam.
-	std::vector<double> fake_NLA_grades_1 = { 100, 100, 100, 35.1064 };
-	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_1).getResult(), true);
-	EXPECT_NEAR((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_1).getScore(), 40, 1e-4);
-
-	// Pass NLA exam.
-	std::vector<double> fake_NLA_grades_2 = { 70, 60, 70, 90 };
-	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_2).getResult(), true);
-	EXPECT_EQ((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_2).getScore(), 89.3);
+	// Barely pass.
+	std::vector<double> fake_NLA_grades_2 = { 41, 41, 41, 41 };
+	EXPECT_TRUE((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_2).getResult());
+	EXPECT_NEAR((*s.getCourse("NLA123")).getGrade(fake_NLA_grades_2).getScore(), 41, 10e-5);
 }
 
 TEST(Hybrid, Get_Score_And_Get_Result_HYBRID_ONLY) {
