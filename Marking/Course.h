@@ -20,10 +20,11 @@ protected:
 	// Variables.
 	std::string identifier;
 	std::vector<double> weights;
-	Credits numberOfCredits{};
+	Credits numberOfCredits;
 public:
 	// Constructor.
 	const Course() = default;
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Course, identifier, weights, numberOfCredits);
 	
 	// Virtual methods.
 	virtual const CourseResult getGrade(const std::vector<double>& grades) const = 0;
@@ -40,20 +41,14 @@ public:
 const class ExamOnly : public Course {
 public:
 	const CourseResult getGrade(const std::vector<double>& grades) const;
-	const ExamOnly() = default;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ExamOnly, identifier, weights, numberOfCredits);
 };
 
 const class CourseworkOnly : public Course {
 public:
 	const CourseResult getGrade(const std::vector<double>& grades) const;
-	const CourseworkOnly() = default;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(CourseworkOnly, identifier, weights, numberOfCredits);
 };
 
 const class Hybrid : public Course {
 public:
 	const CourseResult getGrade(const std::vector<double>& grades) const;
-	//const Hybrid() = default;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Hybrid, identifier, weights, numberOfCredits);
 };

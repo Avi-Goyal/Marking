@@ -145,8 +145,12 @@ TEST(Hybrid, Get_Score_And_Get_Result_HYBRID_ONLY) {
 
 TEST(Course, Validation_Checks) {
 	CourseHolder c(R"(../Test Data - DO NOT EDIT/invalid_courses.json)");
+
 	EXPECT_FALSE((*c.getCourse("AMFE123")).validateIdentifer().size());
 	EXPECT_FALSE((*c.getCourse("AMFE123")).validateWeights());
+
+	EXPECT_TRUE((*c.getCourse("NLA123")).validateIdentifer().size());
+	EXPECT_TRUE((*c.getCourse("NLA123")).validateWeights());
 }
 
 TEST(Student, Validation_Checks) {

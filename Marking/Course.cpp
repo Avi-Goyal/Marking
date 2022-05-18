@@ -14,21 +14,18 @@ const std::string Course::getIdentifier() const {
 }
 
 const std::smatch Course::validateIdentifer() const {
-
 	std::regex regular_expression("^([A-Z]{3})([0-9]{3})$");
 	std::smatch match;
-
-	if (!std::regex_search(identifier, match, regular_expression)) {} // REMOVE ME!!!!!!!!!!!
-
+	std::regex_search(identifier, match, regular_expression);
 	return match;
-
 }
 
 const bool Course::validateWeights() const {
 
 	double sum_weights = std::accumulate(weights.begin(), weights.end(), 0.0);
 
-	if ((1 - 1e-8 < sum_weights) && (sum_weights > 1 + 1e-8)) {
+	// More hacky stuff to account for floating point errors.
+	if ((1 - 1e-8 < sum_weights) && (sum_weights < 1 + 1e-8)) {
 		return true;
 	}
 

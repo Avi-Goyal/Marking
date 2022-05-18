@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
 			LOG(plog::warning) << "Course has an invalid identifier: " << (*course_pair.second).getIdentifier();
 		}
 
-		if ((*course_pair.second).validateWeights()) {
+		if (!(*course_pair.second).validateWeights()) {
 			course_weights_warnings += 1;
 			LOG(plog::warning) << "Course " << (*course_pair.second).getIdentifier() << " has an invalid weight sum. ";
 		}
@@ -163,11 +163,11 @@ int main(int argc, char** argv) {
     int student_counter = 0;
     
 	for (auto& student : students) {
-
+		
 		student.populateResults(c);
 
 		if (student.needsResit() || (!resits_only)) {
-
+		
 			student_counter++;
 
 			s.niceOutput(student.getIdentifier(), c);

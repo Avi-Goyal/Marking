@@ -7,5 +7,16 @@
     "weights": [
       0.99
     ]
+  },
+  {
+    "course_type": 0,
+    "numberOfCredits": 20,
+    "identifier": "NLA123",
+    "name": "Other math stuffs",
+    "weights": [
+      0.1,
+      0.3,
+      0.6
+    ]
   }
 ]

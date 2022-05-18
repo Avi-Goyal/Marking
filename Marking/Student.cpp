@@ -80,7 +80,6 @@ const bool Student::validateGrades() const {
 	for (const auto& pair : grades) {
 		for (const auto& score : pair.second) {
 			if (!((0 <= score) && (score <= 100))) {
-			std::wcout << score << std::endl;
 				LOG(plog::warning) << "Grades for " + getFullName() + " has failed on validating scores. All scores must be 0 <= score <= 100.";
 				return false;
 			}
