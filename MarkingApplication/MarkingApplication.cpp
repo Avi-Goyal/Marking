@@ -1,4 +1,5 @@
-﻿#include "..\Marking\Course.h"
+﻿#include <plog/Log.h>
+#include "..\Marking\Course.h"
 #include "..\Marking\CourseResult.h"
 #include "..\Marking\Student.h"
 #include "..\Marking\CourseHolder.h"
@@ -9,10 +10,8 @@
 #include <iomanip>
 #include <string>
 #include <cstdlib>
-#include <string>
 #include <codecvt>
 #include <locale>
-#include <plog/Log.h>
 
 void maximizeWindow() {
     // See https://stackoverflow.com/questions/6606884/setting-console-to-maximized-in-dev-c
@@ -21,7 +20,6 @@ void maximizeWindow() {
 }
 
 int main(int argc, char** argv) {
-
     std::cout << "WARNING: If you see no text beyond this point your terminal does not support unicode and cannot run this application. Try CMD on Windows." << std::endl << std::endl;
 
     maximizeWindow();
@@ -32,7 +30,7 @@ int main(int argc, char** argv) {
     // Setup special colour handling.
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 15);
-    
+
     CourseHolder c;
     StudentHolder s;
 
@@ -52,7 +50,7 @@ int main(int argc, char** argv) {
         resits_only = false;
         std::wcout << "Showing all students in alphabetical order." << std::endl << std::endl;
     }
-    
+
     std::wcout << L"╔" <<  L"══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════"  << L"╗" << std::endl;
     std::wcout << L"║" << R"(  _    _       _                    _ _                  __   ____  _                _             _                      )" << L"║" << std::endl;
     std::wcout << L"║" << R"( | |  | |     (_)                  (_) |                / _| |  _ \(_)              (_)           | |                     )" << L"║" << std::endl;
@@ -92,21 +90,17 @@ int main(int argc, char** argv) {
     int student_grades_warnings = 0;
 
     for (const auto& student : students) {
-        
         if (!student.validateEmail().size() != 0) {
             email_warnings += 1;
             LOG(plog::warning) << "Student " << student.getIdentifier() << " has an invalid email : " << student.getEmail();
         }
-        
         if (!student.validateIdentifier().size() != 0) {
             student_identifier_warnings += 1;
             LOG(plog::warning) << "Student has an invalid identifier: " << student.getIdentifier();
         }
-
         if (!student.validateGrades()) {
             student_grades_warnings += 1;
         }
-
     }
 
     // Check courses json for errors and print to log.
@@ -114,21 +108,17 @@ int main(int argc, char** argv) {
     int course_weights_warnings = 0;
 
     for (const auto& course_pair : c.getCourseMap()) {
-        
         if ((*course_pair.second).validateIdentifer().size() == 0) {
             course_identifier_warnings += 1;
             LOG(plog::warning) << "Course has an invalid identifier: " << (*course_pair.second).getIdentifier();
         }
-
         if (!(*course_pair.second).validateWeights()) {
             course_weights_warnings += 1;
             LOG(plog::warning) << "Course " << (*course_pair.second).getIdentifier() << " has an invalid weight sum. ";
         }
-
     }
 
     if (email_warnings + student_identifier_warnings + student_grades_warnings + course_identifier_warnings + course_weights_warnings > 0) {
-        
         SetConsoleTextAttribute(hConsole, 12);
         std::wcout << "================================ WARNING ================================" << std::endl;
         SetConsoleTextAttribute(hConsole, 15);
@@ -162,13 +152,11 @@ int main(int argc, char** argv) {
     // ---- Actual table printing. ----
 
     int student_counter = 0;
-    
+
     for (auto& student : students) {
-        
         student.populateResults(c);
 
         if (student.needsResit() || (!resits_only)) {
-        
             student_counter++;
 
             s.niceOutput(student.getIdentifier(), c);
@@ -181,6 +169,5 @@ int main(int argc, char** argv) {
             system("pause>0");
         }
     }
-
     return 0;
 }
