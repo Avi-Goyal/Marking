@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
 
     // Setup special colour handling.
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 15);
 	
 	CourseHolder c;
 	StudentHolder s;
