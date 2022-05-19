@@ -1,4 +1,5 @@
-﻿#include "..\Marking\Course.h"
+#include <plog/Log.h>
+#include "..\Marking\Course.h"
 #include "..\Marking\CourseResult.h"
 #include "..\Marking\Student.h"
 #include "..\Marking\CourseHolder.h"
@@ -9,10 +10,8 @@
 #include <iomanip>
 #include <string>
 #include <cstdlib>
-#include <string>
 #include <codecvt>
 #include <locale>
-#include <plog/Log.h>
 
 void maximizeWindow() {
     // See https://stackoverflow.com/questions/6606884/setting-console-to-maximized-in-dev-c
@@ -21,7 +20,6 @@ void maximizeWindow() {
 }
 
 int main(int argc, char** argv) {
-
     std::cout << "WARNING: If you see no text beyond this point your terminal does not support unicode and cannot run this application. Try CMD on Windows." << std::endl << std::endl;
 
     maximizeWindow();
@@ -31,28 +29,28 @@ int main(int argc, char** argv) {
 
     // Setup special colour handling.
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsole, 15);
-	
-	CourseHolder c;
-	StudentHolder s;
+    SetConsoleTextAttribute(hConsole, 15);
 
-	// This is a bit of a hacky method to support -r using argc and argv but works given getopts seems impossible on windows.
-	bool resits_only;
+    CourseHolder c;
+    StudentHolder s;
 
-	if (argc == 4) {
-		c = CourseHolder(argv[argc - 2]);
-		s = StudentHolder(argv[argc - 1]);
-		if (std::string(argv[1]) == "-r") { 
-			resits_only = true;
-			std::wcout << "Showing only students requiring resits in alphabetical order as specificed by -r argument." << std::endl << std::endl;
-		}
-	} else {
-		c = CourseHolder(argv[argc - 2]);
-		s = StudentHolder(argv[argc- 1]);
-		resits_only = false;
-		std::wcout << "Showing all students in alphabetical order." << std::endl << std::endl;
-	}
-	
+    // This is a bit of a hacky method to support -r using argc and argv but works given getopts seems impossible on windows.
+    bool resits_only;
+
+    if (argc == 4) {
+        c = CourseHolder(argv[argc - 2]);
+        s = StudentHolder(argv[argc - 1]);
+        if (std::string(argv[1]) == "-r") {
+            resits_only = true;
+            std::wcout << "Showing only students requiring resits in alphabetical order as specificed by -r argument." << std::endl << std::endl;
+        }
+    } else {
+        c = CourseHolder(argv[argc - 2]);
+        s = StudentHolder(argv[argc- 1]);
+        resits_only = false;
+        std::wcout << "Showing all students in alphabetical order." << std::endl << std::endl;
+    }
+
     std::wcout << L"╔" <<  L"══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════"  << L"╗" << std::endl;
     std::wcout << L"║" << R"(  _    _       _                    _ _                  __   ____  _                _             _                      )" << L"║" << std::endl;
     std::wcout << L"║" << R"( | |  | |     (_)                  (_) |                / _| |  _ \(_)              (_)           | |                     )" << L"║" << std::endl;
@@ -75,112 +73,102 @@ int main(int argc, char** argv) {
         students.push_back(pair.second);
     }
 
-    std::sort(students.begin(), students.end(), 
+    std::sort(students.begin(), students.end(),
         [](Student& student_1, const Student& student_2) -> bool { return student_1.getFullName() < student_2.getFullName(); });
 
-	// Load log file.
-	plog::init(plog::info, "Log.txt");
+    // Load log file.
+    plog::init(plog::info, "Log.txt");
 
-	LOG(plog::info) << "Sucessfully loaded a students json with " << students.size() << " students.";
-	LOG(plog::info) << "Sucessfully loaded a course json with " << c.getCourseMap().size() << " courses.";
+    LOG(plog::info) << "Sucessfully loaded a students json with " << students.size() << " students.";
+    LOG(plog::info) << "Sucessfully loaded a course json with " << c.getCourseMap().size() << " courses.";
 
-	// ---- Warnings section. ----
+    // ---- Warnings section. ----
 
-	// Check students json for errors and print to log.
-	int email_warnings = 0;
-	int student_identifier_warnings = 0;
-	int student_grades_warnings = 0;
+    // Check students json for errors and print to log.
+    int email_warnings = 0;
+    int student_identifier_warnings = 0;
+    int student_grades_warnings = 0;
 
-	for (const auto& student : students) {
-		
-		if (!student.validateEmail().size() != 0) {
-			email_warnings += 1;
-			LOG(plog::warning) << "Student " << student.getIdentifier() << " has an invalid email : " << student.getEmail();
-		}
-		
-		if (!student.validateIdentifier().size() != 0) {
-			student_identifier_warnings += 1;
-			LOG(plog::warning) << "Student has an invalid identifier: " << student.getIdentifier();
-		}
+    for (const auto& student : students) {
+        if (!student.validateEmail().size() != 0) {
+            email_warnings += 1;
+            LOG(plog::warning) << "Student " << student.getIdentifier() << " has an invalid email : " << student.getEmail();
+        }
+        if (!student.validateIdentifier().size() != 0) {
+            student_identifier_warnings += 1;
+            LOG(plog::warning) << "Student has an invalid identifier: " << student.getIdentifier();
+        }
+        if (!student.validateGrades()) {
+            student_grades_warnings += 1;
+        }
+    }
 
-		if (!student.validateGrades()) {
-			student_grades_warnings += 1;
-		}
+    // Check courses json for errors and print to log.
+    int course_identifier_warnings = 0;
+    int course_weights_warnings = 0;
 
-	}
+    for (const auto& course_pair : c.getCourseMap()) {
+        if ((*course_pair.second).validateIdentifer().size() == 0) {
+            course_identifier_warnings += 1;
+            LOG(plog::warning) << "Course has an invalid identifier: " << (*course_pair.second).getIdentifier();
+        }
+        if (!(*course_pair.second).validateWeights()) {
+            course_weights_warnings += 1;
+            LOG(plog::warning) << "Course " << (*course_pair.second).getIdentifier() << " has an invalid weight sum. ";
+        }
+    }
 
-	// Check courses json for errors and print to log.
-	int course_identifier_warnings = 0;
-	int course_weights_warnings = 0;
+    if (email_warnings + student_identifier_warnings + student_grades_warnings + course_identifier_warnings + course_weights_warnings > 0) {
+        SetConsoleTextAttribute(hConsole, 12);
+        std::wcout << "================================ WARNING ================================" << std::endl;
+        SetConsoleTextAttribute(hConsole, 15);
+        std::wcout << "Errors in provided files found and listed below. See log.txt for details." << std::endl;
 
-	for (const auto& course_pair : c.getCourseMap()) {
-		
-		if ((*course_pair.second).validateIdentifer().size() == 0) {
-			course_identifier_warnings += 1;
-			LOG(plog::warning) << "Course has an invalid identifier: " << (*course_pair.second).getIdentifier();
-		}
+        if (email_warnings > 0) {
+            std::wcout << "Invalid Student Emails: " << email_warnings << std::endl;
+        }
 
-		if (!(*course_pair.second).validateWeights()) {
-			course_weights_warnings += 1;
-			LOG(plog::warning) << "Course " << (*course_pair.second).getIdentifier() << " has an invalid weight sum. ";
-		}
+        if (student_identifier_warnings > 0) {
+            std::wcout << "Invalid Student Identifiers: " << student_identifier_warnings << std::endl;
+        }
 
-	}
+        if (student_grades_warnings > 0) {
+            std::wcout << "Invalid Student Grades: " << student_grades_warnings << std::endl;
+        }
 
-	if (email_warnings + student_identifier_warnings + student_grades_warnings + course_identifier_warnings + course_weights_warnings > 0) {
-		
-		SetConsoleTextAttribute(hConsole, 12);
-		std::wcout << "================================ WARNING ================================" << std::endl;
-		SetConsoleTextAttribute(hConsole, 15);
-		std::wcout << "Errors in provided files found and listed below. See log.txt for details." << std::endl;
+        if (course_identifier_warnings > 0) {
+            std::wcout << "Invalid Course Identifiers: " << course_identifier_warnings << std::endl;
+        }
 
-		if (email_warnings > 0) {
-			std::wcout << "Invalid Student Emails: " << email_warnings << std::endl;
-		}
+        if (course_weights_warnings > 0) {
+            std::wcout << "Invalid Course Weights: " << course_weights_warnings << std::endl;
+        }
 
-		if (student_identifier_warnings > 0) {
-			std::wcout << "Invalid Student Identifiers: " << student_identifier_warnings << std::endl;
-		}
+        SetConsoleTextAttribute(hConsole, 12);
+        std::wcout << "================================ WARNING ================================" << std::endl << std::endl;
+        SetConsoleTextAttribute(hConsole, 15);
+    }
 
-		if (student_grades_warnings > 0) {
-			std::wcout << "Invalid Student Grades: " << student_grades_warnings << std::endl;
-		}
-
-		if (course_identifier_warnings > 0) {
-			std::wcout << "Invalid Course Identifiers: " << course_identifier_warnings << std::endl;
-		}
-
-		if (course_weights_warnings > 0) {
-			std::wcout << "Invalid Course Weights: " << course_weights_warnings << std::endl;
-		}
-
-		SetConsoleTextAttribute(hConsole, 12);
-		std::wcout << "================================ WARNING ================================" << std::endl << std::endl;
-		SetConsoleTextAttribute(hConsole, 15);
-	}
-
-	// ---- Actual table printing. ----
+    // ---- Actual table printing. ----
 
     int student_counter = 0;
-    
-	for (auto& student : students) {
-		
-		student.populateResults(c);
 
-		if (student.needsResit() || (!resits_only)) {
-		
-			student_counter++;
+    for (auto& student : students) {
+        student.populateResults(c);
 
-			s.niceOutput(student.getIdentifier(), c);
+        if (student.needsResit() || (!resits_only)) {
+            student_counter++;
 
-			SetConsoleTextAttribute(hConsole, 10);
-			std::wcout << L"Press any key to continue..." << std::endl << std::endl;
-			SetConsoleTextAttribute(hConsole, 15);
+            s.niceOutput(student.getIdentifier(), c);
 
-			// Pauses program until key is entered.
-			system("pause>0");
-		}
-	}
+            SetConsoleTextAttribute(hConsole, 10);
+            std::wcout << L"Press any key to continue..." << std::endl << std::endl;
+            SetConsoleTextAttribute(hConsole, 15);
+
+            // Pauses program until key is entered.
+            system("pause>0");
+        }
+    }
 
     return 0;
 }
