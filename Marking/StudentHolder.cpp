@@ -12,8 +12,12 @@ void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_
 		// We choose this specific length because any grade to 2 decimal places can fit here with 1 space buffer around it.
 		std::wcout << L"━━━━━━━";
 		// Check for end character and change shape.
-		if (i != number_of_sections -1 ) { std::wcout << mid_char; }
-		else { std::wcout << end_char << std::endl;; }
+		if (i != number_of_sections - 1) {
+			std::wcout << mid_char;
+		}
+		else {
+			std::wcout << end_char << std::endl;
+		}
 	}
 }
 
@@ -38,7 +42,6 @@ const std::wstring stringRound(double grade) {
 // -----------------------------------------------------------------------------
 
 StudentHolder::StudentHolder(const std::string& file_path_name) {
-	
 	std::ifstream json_file(file_path_name);
 	students = nlohmann::json::parse(json_file);
 
@@ -62,7 +65,6 @@ const std::map<std::string, Student> StudentHolder::getStudentMap() const {
 }
 
 void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder& courses) const {
-	
 	// Very long complex function but hopefully it makes sense with the comments.
 
 	bool needs_resits = false;
@@ -105,8 +107,8 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	}
 
 	// Add 3 because grades + course name + aggregate mark + credits + pass/fail.
-	const int total_grade_table_length = (int) max_grade_count + 3; 
-	
+	const int total_grade_table_length = static_cast<int>(max_grade_count) + 3;
+
 	printMid(total_grade_table_length, L"┏", L"┳", L"┓");
 
 	// ---------------------------------- Print out the column headers for student grades, total and pass. ------------------------
@@ -122,7 +124,6 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 		else {
 			std::wcout << L"┃";
 		}
-
 	}
 
 	std::wcout << L" Total ┃Credits┃ Pass? ┃" << std::endl;
@@ -131,12 +132,10 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	int grades_counter = 0;
 	for (const auto& pair : student_to_output.getGrades()) {
-
 		printMid(total_grade_table_length, L"┣", L"╋", L"┫");
 
 		// Print course code.
 		std::wcout << L'┃' << toUnicodeString(" " + pair.first + " ");
-	
 		// Print grades.
 		grades_counter = 0;
 		std::wcout << L'┃';
@@ -165,13 +164,14 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 		bool result_bool = associated_course_result_object.getResult();
 
 		// True and false take different amounts of space and have differnet colours.
-		if (result_bool) { 
+		if (result_bool) {
 			// Text colours: Red = 4, Green = 10, White (reset colour) = 15.
 			SetConsoleTextAttribute(hConsole, 10);
 			std::wcout << L" " << std::boolalpha << result_bool;
 			SetConsoleTextAttribute(hConsole, 15);
 			std::wcout << L"  ┃";
-		} else {
+		}
+		else {
 			// If ever false we need resits so this makes the misc information later on easier to parse.
 			needs_resits = true;
 			SetConsoleTextAttribute(hConsole, 4);
@@ -179,7 +179,6 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 			SetConsoleTextAttribute(hConsole, 15);
 			std::wcout << L" ┃";
 		}
-		
 		std::wcout << std::endl;
 	}
 
@@ -191,7 +190,6 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	std::vector<int> credit_vector;
 	int total_credits = 0;
 	int credits;
-	
 	// Get total credits.
 	for (const auto& pair : student_to_output.getGrades()) {
 		credits = (*map_to_course_ptrs[pair.first]).getNumberOfCredits();
@@ -201,7 +199,7 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 
 	/// To find aggregate mark we have to weight our results by their credits.
 	/// I.e. credits [20, 10, 10, 20, 20] have weights [0.25, 0.125, 0.125, 0.25, 0.25]
-	/// and from here can be dot producted with course aggregate marks for overall aggregate mark. 
+	/// and from here can be dot producted with course aggregate marks for overall aggregate mark.
 	std::vector<double> credits_vector_weights;
 	double sum_credits = std::accumulate(credit_vector.begin(), credit_vector.end(), 0);
 	for (const auto& credits : credit_vector) {
@@ -222,7 +220,8 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 		std::wcout << std::boolalpha << needs_resits;
 		SetConsoleTextAttribute(hConsole, 15);
 		std::wcout << L"   ┃";
-	} else {
+	}
+	else {
 		SetConsoleTextAttribute(hConsole, 4);
 		std::wcout << std::boolalpha << needs_resits;
 		SetConsoleTextAttribute(hConsole, 15);
@@ -237,15 +236,18 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
 	std::wcout << L"┃ Degree Classiciation ┃";
 	if (aggregate_mark < 40) {
 		std::wcout << L" FAIL   ┃";
-	} else if (aggregate_mark < 50) {
+	}
+	else if (aggregate_mark < 50) {
 		std::wcout << L" Third  ┃";
-	} else if (aggregate_mark < 60) {
+	}
+	else if (aggregate_mark < 60) {
 		std::wcout << L" 2:2    ┃";
-	} else if (aggregate_mark < 70) {
+	}
+	else if (aggregate_mark < 70) {
 		std::wcout << L" 2:1    ┃";
-	} else {
+	}
+	else {
 		std::wcout << L" 1:1    ┃";
 	}
 	std::wcout << std::endl << L"┗━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━┛" << std::endl;
-
 }

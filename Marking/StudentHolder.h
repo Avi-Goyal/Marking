@@ -1,19 +1,19 @@
 #pragma once
+#include <windows.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <plog/Log.h>
 #include <map>
 #include <string>
 #include <memory>
 #include <locale>
 #include <iomanip>
-#include <windows.h>
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <set>
 #include <cstdlib>
 #include <codecvt>
 #include "Course.h"
 #include "Student.h"
-#include <plog/Log.h>
 
 const class StudentHolder {
 private:
@@ -31,4 +31,3 @@ public:
 	const std::map<std::string, Student> getStudentMap() const;
 	void niceOutput(const std::string& student_id, const CourseHolder& courses) const;
 };
-
