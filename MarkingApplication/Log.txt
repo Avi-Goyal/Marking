@@ -34,3 +34,15 @@
 2022-05-19 19:12:51.876 INFO  [15896] [main@83] Sucessfully loaded a course json with 31 courses.
 2022-05-19 19:16:36.974 INFO  [4976] [main@82] Sucessfully loaded a students json with 700 students.
 2022-05-19 19:16:36.974 INFO  [4976] [main@83] Sucessfully loaded a course json with 31 courses.
+2022-05-19 19:20:53.741 INFO  [1088] [main@82] Sucessfully loaded a students json with 700 students.
+2022-05-19 19:20:53.741 INFO  [1088] [main@83] Sucessfully loaded a course json with 31 courses.
+2022-05-19 19:21:17.006 INFO  [3408] [main@82] Sucessfully loaded a students json with 700 students.
+2022-05-19 19:21:17.007 INFO  [3408] [main@83] Sucessfully loaded a course json with 31 courses.
+2022-05-19 19:21:35.794 INFO  [14196] [main@82] Sucessfully loaded a students json with 700 students.
+2022-05-19 19:21:35.794 INFO  [14196] [main@83] Sucessfully loaded a course json with 31 courses.
+2022-05-19 19:23:38.364 INFO  [13928] [main@82] Sucessfully loaded a students json with 700 students.
+2022-05-19 19:23:38.365 INFO  [13928] [main@83] Sucessfully loaded a course json with 31 courses.
+2022-05-19 19:25:40.111 INFO  [764] [main@82] Sucessfully loaded a students json with 700 students.
+2022-05-19 19:25:40.111 INFO  [764] [main@83] Sucessfully loaded a course json with 31 courses.
+2022-05-19 19:29:43.692 INFO  [10896] [main@82] Sucessfully loaded a students json with 700 students.
+2022-05-19 19:29:43.693 INFO  [10896] [main@83] Sucessfully loaded a course json with 31 courses.

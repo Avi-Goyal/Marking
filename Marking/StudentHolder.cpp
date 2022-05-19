@@ -186,12 +186,12 @@ void StudentHolder::niceOutput(const std::string& student_id, const CourseHolder
     // Necessary so we can weight marks properly.
     std::vector<int> credit_vector;
     int total_credits = 0;
-    int credits;
+    int module_credits;
     // Get total credits.
     for (const auto& pair : student_to_output.getGrades()) {
-        credits = (*map_to_course_ptrs[pair.first]).getNumberOfCredits();
-        total_credits += credits;
-        credit_vector.push_back(credits);
+		module_credits = (*map_to_course_ptrs[pair.first]).getNumberOfCredits();
+        total_credits += module_credits;
+        credit_vector.push_back(module_credits);
     }
 
     /// To find aggregate mark we have to weight our results by their credits.
