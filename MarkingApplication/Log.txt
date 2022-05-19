@@ -18,3 +18,7 @@
 2022-05-19 16:46:56.944 INFO  [7540] [main@85] Sucessfully loaded a course json with 31 courses.
 2022-05-19 16:55:21.577 INFO  [13104] [main@84] Sucessfully loaded a students json with 700 students.
 2022-05-19 16:55:21.578 INFO  [13104] [main@85] Sucessfully loaded a course json with 31 courses.
+2022-05-19 17:48:08.138 INFO  [12720] [main@84] Sucessfully loaded a students json with 700 students.
+2022-05-19 17:48:08.138 INFO  [12720] [main@85] Sucessfully loaded a course json with 31 courses.
+2022-05-19 18:51:06.609 INFO  [12276] [main@84] Sucessfully loaded a students json with 700 students.
+2022-05-19 18:51:06.610 INFO  [12276] [main@85] Sucessfully loaded a course json with 31 courses.

@@ -14,8 +14,7 @@ void printMid(int number_of_sections, std::wstring start_char, std::wstring mid_
 		// Check for end character and change shape.
 		if (i != number_of_sections - 1) {
 			std::wcout << mid_char;
-		}
-		else {
+		} else {
 			std::wcout << end_char << std::endl;
 		}
 	}
